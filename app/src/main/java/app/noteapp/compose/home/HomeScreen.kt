@@ -1,6 +1,8 @@
 package app.noteapp.compose.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +42,11 @@ fun HomeScreen (
     onNoteClick: (Note) -> Unit = {},
     onAddNoteClick: () -> Unit = {}
 ) {
-    val notesState by viewModel.notes.collectAsStateWithLifecycle()
+    val notesState by viewModel.notes.collectAsState()
+    Log.d("HomeScreen", "notes get: ${notesState.size}")
+    LaunchedEffect(key1 = true) {
+        viewModel.notes
+    }
 
     Scaffold (
         topBar = {
@@ -56,44 +63,37 @@ fun HomeScreen (
             FloatingActionButton(onClick = {onAddNoteClick()}) {
                 Icon(imageVector = Icons.Filled.Add, contentDescription = "Добавить заметку")
             }
+        },
+        content = { paddingValues ->
+            HomePageScreen(padding = paddingValues, notes = notesState, onNoteClick = onNoteClick)
         }
-    ) { contentPadding ->
-        HomePageScreen(
-            notes = notesState,
-            Modifier.padding(top = contentPadding.calculateTopPadding()),
-            onNoteClick = onNoteClick,
-        )
-    }
+    )
 }
 
 @Composable
 private fun HomePageScreen (
+    padding: PaddingValues,
     notes: List<Note>,
-    modifier: Modifier = Modifier,
     onNoteClick: (Note) -> Unit,
 ) {
-    val noteList = remember { mutableStateOf(emptyList<Note>()) }
-    val scope = rememberCoroutineScope()
-    LaunchedEffect(key1 = notes) {
-        scope.launch {
-            noteList.value = notes
-        }
-    }
+
     Column (
-        modifier = modifier,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding),
     ){
         LazyColumn (
             modifier = Modifier
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            items(noteList.value) { note ->
+            items(notes) { note ->
                 Card(
                     onClick = { onNoteClick(note)},
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 4.dp)
-                    ) {
+                ) {
                     note.title?.let {
                         Text(
                             text = it,

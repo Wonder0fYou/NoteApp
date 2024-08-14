@@ -2,6 +2,7 @@ package app.noteapp.compose.notecontent
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -46,12 +47,17 @@ fun NoteContent(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { noteDelete(
+                        noteId = noteId,
+                        onBackClick = {onBackClick()},
+                        viewModel = viewModel
+                    )}) {
                         Icon(imageVector = Icons.Filled.Delete, contentDescription = "Удалить")
                     }
-                }
+                },
             )
-        }
+        },
+        contentWindowInsets = WindowInsets(left = 12.dp, right = 6.dp)
     ){contentPadding ->
         note?.let {
             NotePageContent(
@@ -78,4 +84,13 @@ fun NotePageContent (
         
         Text(text = (note.content.toString()))
     }
+}
+
+fun noteDelete (
+    noteId: Int,
+    onBackClick: () -> Unit,
+    viewModel: NoteViewModel
+) {
+    viewModel.deleteNote(noteId)
+    onBackClick()
 }

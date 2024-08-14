@@ -46,7 +46,7 @@ fun NoteNavHost (
         composable(
             route = Screen.NoteContent.route,
             arguments = Screen.NoteContent.navArgument
-        ) {backStackEntry ->
+        ) { backStackEntry ->
             val noteId = backStackEntry.arguments?.getString("noteId")?.toIntOrNull() ?: -1
             NoteContent (
                 onBackClick = {
@@ -60,8 +60,8 @@ fun NoteNavHost (
             route = Screen.AddNote.route
         ) {
             AddNoteScreen (
-                onBackClick = {
-                    navController.navigateUp()
+                onSaveClick = {
+                    navController.popBackStack()
                 }
             )
         }

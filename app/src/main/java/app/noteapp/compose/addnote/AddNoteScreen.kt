@@ -21,7 +21,7 @@ import app.noteapp.viewmodels.NoteViewModel
 
 @Composable
 fun AddNoteScreen (
-    onBackClick: () -> Unit,
+    onSaveClick: () -> Unit,
     viewModel: NoteViewModel = hiltViewModel()
 ) {
     var title by remember {
@@ -56,7 +56,7 @@ fun AddNoteScreen (
                     content = content,
                 )
             )
-            onBackClick()
+            onSaveClick()
         }) {
             Text(text = "Сохранить")
         }
