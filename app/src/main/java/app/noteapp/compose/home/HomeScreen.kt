@@ -1,6 +1,6 @@
 package app.noteapp.compose.home
 
-import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,17 +23,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.noteapp.viewmodels.NoteViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.noteapp.domain.model.Note
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,25 +40,25 @@ fun HomeScreen (
     onAddNoteClick: () -> Unit = {}
 ) {
     val notesState by viewModel.notes.collectAsState()
-    Log.d("HomeScreen", "notes get: ${notesState.size}")
-    LaunchedEffect(key1 = true) {
-        viewModel.notes
+
+    LaunchedEffect(key1 = notesState) {
+
     }
 
     Scaffold (
         topBar = {
             TopAppBar(
-                title = {Text("Заметки", fontSize = 22.sp)},
+                title = {Text("Заметки", fontSize = 30.sp)},
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Поиск")
+                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
                     }
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {onAddNoteClick()}) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = "Добавить заметку")
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add Note")
             }
         },
         content = { paddingValues ->
@@ -85,19 +82,31 @@ private fun HomePageScreen (
         LazyColumn (
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp)
+                .padding(10.dp)
         ) {
             items(notes) { note ->
                 Card(
                     onClick = { onNoteClick(note)},
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 4.dp)
+                        .padding(vertical = 2.dp),
+                    shape = RectangleShape,
+                    border = BorderStroke(width = 1.dp , color = Color.Black)
                 ) {
                     note.title?.let {
                         Text(
                             text = it,
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier
+                                .padding(vertical = 2.dp, horizontal = 10.dp),
+                            fontSize = 22.sp,
+                        )
+                    }
+                    note.content?.let {
+                        Text(
+                            text = it,
+                            modifier = Modifier
+                                .padding(vertical = 2.dp, horizontal = 10.dp),
+                            maxLines = 1
                         )
                     }
                 }

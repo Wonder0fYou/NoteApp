@@ -1,22 +1,15 @@
 package app.noteapp.viewmodels
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import app.noteapp.domain.model.Note
 import app.noteapp.domain.repository.NoteRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -27,7 +20,7 @@ class NoteViewModel @Inject constructor(
 ): ViewModel(){
 
     private val _notes = MutableStateFlow<List<Note>>(arrayListOf())
-    val notes: StateFlow<List<Note>> = _notes
+    val notes: StateFlow<List<Note>> = _notes.asStateFlow()
     private val _note = MutableStateFlow<Note?>(null)
     var note: StateFlow<Note?> = _note
 
@@ -44,8 +37,6 @@ class NoteViewModel @Inject constructor(
             noteRepository.insertNote(note)
             withContext(Dispatchers.Main) {
                 _notes.value = noteRepository.getNotes().first()
-                Log.d("NoteViewModel", "Notes updated: ${_notes.value}")
-                Log.d("NoteViewModel", "notes get: ${notes.value}")
             }
         }
     }
@@ -55,8 +46,6 @@ class NoteViewModel @Inject constructor(
             noteRepository.deleteNote(noteId)
             withContext(Dispatchers.Main) {
                 _notes.value = noteRepository.getNotes().first()
-                Log.d("NoteViewModel", "Notes updated: ${_notes.value}")
-                Log.d("NoteViewModel", "notes get: ${notes.value}")
             }
         }
     }
