@@ -21,6 +21,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,12 +53,33 @@ fun NoteContent(
     title = note?.title.toString()
     content = note?.content.toString()
 
+    val isUpdated = remember {
+        derivedStateOf {
+            title != note?.title || content != note?.content
+        }
+    }
+
+    if (note != null) {
+        title = note!!.title.toString()
+        content = note!!.content.toString()
+    }
+
     Scaffold (
         topBar = {
             TopAppBar(
                 title = { Text("Содержимое заметки") },
                 navigationIcon = {
-                    IconButton(onClick = {onBackClick()}) {
+                    IconButton(onClick = {
+                        note?.let {
+                            backUpdate(
+                                note = it,
+                                viewModel = viewModel,
+                                title = title,
+                                content = content,
+                                onBackClick = {onBackClick()}
+                            )
+                        }
+                    }) {
                         Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
@@ -73,10 +95,14 @@ fun NoteContent(
                         note?.let {
                             noteUpdate(
                                 note = it,
-                                viewModel = viewModel
+                                viewModel = viewModel,
+                                title = title,
+                                content = content
                             )
                         }
-                    }) {
+                    },
+                        enabled = isUpdated.value
+                    ) {
                         Icon(imageVector = Icons.Filled.Check, contentDescription = "Update note")
                     }
                 },
@@ -86,8 +112,11 @@ fun NoteContent(
     ){contentPadding ->
         note?.let {
             NotePageContent(
+                title =  title,
+                content = content,
                 Modifier.padding(top = contentPadding.calculateTopPadding()),
-                note = it
+                onTitleChange = {title = it},
+                onContentChange = {content = it}
             )
         }
     }
@@ -95,8 +124,11 @@ fun NoteContent(
 
 @Composable
 fun NotePageContent (
+    title: String,
+    content: String,
     modifier: Modifier = Modifier,
-    note: Note,
+    onTitleChange: (String) -> Unit,
+    onContentChange: (String) -> Unit
 ) {
     Column (
         modifier = modifier
@@ -105,8 +137,8 @@ fun NotePageContent (
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = note.title.toString(),
-            onValueChange = {note.title = it},
+            value = title,
+            onValueChange = onTitleChange,
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White
@@ -115,8 +147,8 @@ fun NotePageContent (
         TextField(
             modifier = Modifier
                 .fillMaxSize(),
-            value = note.content.toString(),
-            onValueChange = {note.content = it},
+            value = content,
+            onValueChange = onContentChange,
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White
@@ -136,7 +168,24 @@ fun noteDelete (
 
 fun noteUpdate (
     note: Note,
-    viewModel: NoteViewModel
+    viewModel: NoteViewModel,
+    title: String,
+    content: String
 ) {
+    note.title = title
+    note.content = content
     viewModel.updateNote(note)
+}
+
+fun backUpdate(
+    note: Note,
+    viewModel: NoteViewModel,
+    title: String,
+    content: String,
+    onBackClick: () -> Unit
+) {
+    note.title = title
+    note.content = content
+    viewModel.updateNote(note)
+    onBackClick()
 }
