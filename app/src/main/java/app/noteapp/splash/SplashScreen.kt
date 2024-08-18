@@ -27,7 +27,7 @@ fun SplashScreen (
     }
 
     LaunchedEffect(Unit) {
-        delay(3000)
+        delay(1000)
         navigateToHomeScreen()
     }
 }

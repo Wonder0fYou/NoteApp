@@ -74,6 +74,7 @@ fun NoteNavHost (
                 noteId = noteId
             )
         }
+
         //AddNoteScreen
         composable(
             route = Screen.AddNote.route
@@ -81,6 +82,9 @@ fun NoteNavHost (
             AddNoteScreen (
                 viewModel = viewModel,
                 onSaveClick = {
+                    navController.popBackStack()
+                },
+                onBackClick = {
                     navController.popBackStack()
                 }
             )
