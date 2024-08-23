@@ -24,7 +24,14 @@ class NoteViewModel @Inject constructor(
     private val _note = MutableStateFlow<Note?>(null)
     var note: StateFlow<Note?> = _note
 
+    private val _isVisible = MutableStateFlow(false)
+    val isVisible: StateFlow<Boolean> = _isVisible.asStateFlow()
+
     init {
+        loadNote()
+    }
+
+    private fun loadNote() {
         viewModelScope.launch {
             noteRepository.getNotes().collect { notesList ->
                 _notes.value = notesList
@@ -54,12 +61,22 @@ class NoteViewModel @Inject constructor(
         viewModelScope.launch {
             val fetchedNote = noteRepository.getNote(noteId)
             _note.value = fetchedNote
+            _isVisible.value = false
         }
     }
 
     fun updateNote(note: Note) {
         viewModelScope.launch {
             noteRepository.updateNote(note)
+            _isVisible.value = false
         }
+    }
+
+    fun onTitleChange(newTitle: String) {
+        _isVisible.value = newTitle != _note.value?.title
+    }
+
+    fun onContentChange(newContent: String) {
+        _isVisible.value = newContent != _note.value?.content
     }
 }

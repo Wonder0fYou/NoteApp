@@ -21,7 +21,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,23 +39,18 @@ fun NoteContent(
     viewModel: NoteViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    var title by remember {
-        mutableStateOf("")
-    }
-    var content by remember {
-        mutableStateOf("")
-    }
+
     LaunchedEffect(key1 = noteId) {
         viewModel.getNote(noteId)
     }
     val note by viewModel.note.collectAsState()
-    title = note?.title.toString()
-    content = note?.content.toString()
+    val isVisible by viewModel.isVisible.collectAsState()
 
-    val isUpdated = remember {
-        derivedStateOf {
-            title != note?.title || content != note?.content
-        }
+    var title by remember {
+        mutableStateOf(note?.title ?: "")
+    }
+    var content by remember {
+        mutableStateOf(note?.content ?: "")
     }
 
     if (note != null) {
@@ -91,19 +85,24 @@ fun NoteContent(
                     )}) {
                         Icon(imageVector = Icons.Filled.Delete, contentDescription = "Delete")
                     }
-                    IconButton(onClick = {
-                        note?.let {
-                            noteUpdate(
-                                note = it,
-                                viewModel = viewModel,
-                                title = title,
-                                content = content
+                    if (isVisible) {
+                        IconButton(
+                            onClick = {
+                                note?.let {
+                                    noteUpdate(
+                                        note = it,
+                                        viewModel = viewModel,
+                                        title = title,
+                                        content = content
+                                    )
+                                }
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Check,
+                                contentDescription = "Update note"
                             )
                         }
-                    },
-                        enabled = isUpdated.value
-                    ) {
-                        Icon(imageVector = Icons.Filled.Check, contentDescription = "Update note")
                     }
                 },
             )
@@ -112,11 +111,15 @@ fun NoteContent(
     ){contentPadding ->
         note?.let {
             NotePageContent(
-                title =  title,
+                title = title,
                 content = content,
                 Modifier.padding(top = contentPadding.calculateTopPadding()),
-                onTitleChange = {title = it},
-                onContentChange = {content = it}
+                onTitleChange = {
+                    title = it
+                    viewModel.onTitleChange(it) },
+                onContentChange = {content = it
+                viewModel.onContentChange(it)
+                }
             )
         }
     }
