@@ -1,82 +1,95 @@
-package app.noteapp.viewmodels
+    package app.noteapp.viewmodels
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import app.noteapp.domain.model.Note
-import app.noteapp.domain.repository.NoteRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+    import androidx.lifecycle.ViewModel
+    import androidx.lifecycle.viewModelScope
+    import dagger.hilt.android.lifecycle.HiltViewModel
+    import app.noteapp.domain.model.Note
+    import app.noteapp.domain.repository.NoteRepository
+    import kotlinx.coroutines.Dispatchers
+    import kotlinx.coroutines.flow.MutableStateFlow
+    import kotlinx.coroutines.flow.StateFlow
+    import kotlinx.coroutines.flow.asStateFlow
+    import kotlinx.coroutines.flow.first
+    import kotlinx.coroutines.launch
+    import kotlinx.coroutines.withContext
+    import javax.inject.Inject
 
-@HiltViewModel
-class NoteViewModel @Inject constructor(
-    private val noteRepository: NoteRepository
-): ViewModel(){
+    @HiltViewModel
+    class NoteViewModel @Inject constructor(
+        private val noteRepository: NoteRepository
+    ): ViewModel(){
 
-    private val _notes = MutableStateFlow<List<Note>>(arrayListOf())
-    val notes: StateFlow<List<Note>> = _notes.asStateFlow()
-    private val _note = MutableStateFlow<Note?>(null)
-    var note: StateFlow<Note?> = _note
+        private val _notes = MutableStateFlow<List<Note>>(arrayListOf())
+        val notes: StateFlow<List<Note>> = _notes.asStateFlow()
+        private val _note = MutableStateFlow<Note?>(null)
+        var note: StateFlow<Note?> = _note
 
-    private val _isVisible = MutableStateFlow(false)
-    val isVisible: StateFlow<Boolean> = _isVisible.asStateFlow()
+        private val _isVisible = MutableStateFlow(false)
+        val isVisible: StateFlow<Boolean> = _isVisible.asStateFlow()
 
-    init {
-        loadNote()
-    }
+        private val _rememberTitle = MutableStateFlow("")
+        val rememberTitle: StateFlow<String> = _rememberTitle.asStateFlow()
+        private val _rememberContent = MutableStateFlow("")
+        val rememberContent: StateFlow<String> = _rememberContent.asStateFlow()
 
-    private fun loadNote() {
-        viewModelScope.launch {
-            noteRepository.getNotes().collect { notesList ->
-                _notes.value = notesList
+        init {
+            loadNote()
+        }
+
+        private fun loadNote() {
+            viewModelScope.launch {
+                noteRepository.getNotes().collect { notesList ->
+                    _notes.value = notesList
+                }
             }
         }
-    }
 
-    fun addNote (note: Note) {
-        viewModelScope.launch {
-            noteRepository.insertNote(note)
-            withContext(Dispatchers.Main) {
-                _notes.value = noteRepository.getNotes().first()
+        fun addNote (note: Note) {
+            viewModelScope.launch {
+                noteRepository.insertNote(note)
+                withContext(Dispatchers.Main) {
+                    _notes.value = noteRepository.getNotes().first()
+                }
             }
         }
-    }
 
-    fun deleteNote(noteId: Int) {
-        viewModelScope.launch {
-            noteRepository.deleteNote(noteId)
-            withContext(Dispatchers.Main) {
-                _notes.value = noteRepository.getNotes().first()
+        fun deleteNote(noteId: Int) {
+            viewModelScope.launch {
+                noteRepository.deleteNote(noteId)
+                withContext(Dispatchers.Main) {
+                    _notes.value = noteRepository.getNotes().first()
+                }
             }
         }
-    }
 
-    fun getNote(noteId: Int) {
-        viewModelScope.launch {
-            val fetchedNote = noteRepository.getNote(noteId)
-            _note.value = fetchedNote
-            _isVisible.value = false
+        fun getNote(noteId: Int) {
+            viewModelScope.launch {
+                val fetchedNote = noteRepository.getNote(noteId)
+                _note.value = fetchedNote
+                _isVisible.value = false
+            }
+        }
+
+        fun updateNote(note: Note) {
+            viewModelScope.launch {
+                noteRepository.updateNote(note)
+                _isVisible.value = false
+            }
+        }
+
+        fun onTitleChange(newTitle: String) {
+            _isVisible.value = newTitle != _note.value?.title
+        }
+
+        fun onContentChange(newContent: String) {
+            _isVisible.value = newContent != _note.value?.content
+        }
+
+        fun onRememberTitle(newTitle: String) {
+            _rememberTitle.value = newTitle
+        }
+
+        fun onRememberContent(newContent: String) {
+            _rememberContent.value = newContent
         }
     }
-
-    fun updateNote(note: Note) {
-        viewModelScope.launch {
-            noteRepository.updateNote(note)
-            _isVisible.value = false
-        }
-    }
-
-    fun onTitleChange(newTitle: String) {
-        _isVisible.value = newTitle != _note.value?.title
-    }
-
-    fun onContentChange(newContent: String) {
-        _isVisible.value = newContent != _note.value?.content
-    }
-}
