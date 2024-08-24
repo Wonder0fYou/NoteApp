@@ -12,6 +12,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun AddContent (
@@ -19,7 +20,7 @@ fun AddContent (
     title: String,
     content: String,
     onTitleChange: (String) -> Unit,
-    onContentChange: (String) -> Unit
+    onContentChange: (String) -> Unit,
 ) {
     Column (
         modifier = Modifier

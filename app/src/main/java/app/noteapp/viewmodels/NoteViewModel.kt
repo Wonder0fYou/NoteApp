@@ -1,5 +1,8 @@
     package app.noteapp.viewmodels
 
+    import androidx.compose.material3.SnackbarHostState
+    import androidx.compose.runtime.MutableState
+    import androidx.compose.runtime.mutableStateOf
     import androidx.lifecycle.ViewModel
     import androidx.lifecycle.viewModelScope
     import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +34,12 @@
         val rememberTitle: StateFlow<String> = _rememberTitle.asStateFlow()
         private val _rememberContent = MutableStateFlow("")
         val rememberContent: StateFlow<String> = _rememberContent.asStateFlow()
+
+        private val _snackBarHostState = mutableStateOf(SnackbarHostState())
+        val snackBarHostState: MutableState<SnackbarHostState> = _snackBarHostState
+
+        private val _popUpJoke = MutableStateFlow(false)
+        val popUpJoke: StateFlow<Boolean> = _popUpJoke.asStateFlow()
 
         init {
             loadNote()
@@ -91,5 +100,9 @@
 
         fun onRememberContent(newContent: String) {
             _rememberContent.value = newContent
+        }
+
+        fun checkJoke(title: String = "", content: String = "") {
+            _popUpJoke.value = title == "Анекдот" || content == "Анекдот"
         }
     }
