@@ -1,5 +1,6 @@
 package app.noteapp.compose.home
 
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,13 +16,16 @@ import app.noteapp.domain.model.Note
 fun HomeScreen (
     viewModel: NoteViewModel = hiltViewModel(),
     onNoteClick: (Note) -> Unit = {},
-    onAddNoteClick: () -> Unit = {}
+    onAddNoteClick: () -> Unit = {},
+    drawerState: DrawerState
 ) {
     val notesState by viewModel.notes.collectAsState()
 
     Scaffold (
         topBar = {
-            HomeTopBar()
+            HomeTopBar(
+                drawerState = drawerState
+            )
         },
         floatingActionButton = {
             HomeFloatingButton (
