@@ -4,12 +4,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import app.noteapp.domain.model.Note
 import app.noteapp.viewmodels.NoteViewModel
 
@@ -24,6 +28,9 @@ fun NoteContentTopBar (
     noteId: Int,
     isVisible: Boolean
 ) {
+    val openDialogDelete = remember {
+        mutableStateOf(false)
+    }
     TopAppBar(
         title = { Text("Содержимое заметки") },
         navigationIcon = {
@@ -40,13 +47,30 @@ fun NoteContentTopBar (
             }
         },
         actions = {
-            IconButton(onClick = { noteDelete(
-                noteId = noteId,
-                onBackClick = {onBackClick()},
-                viewModel = viewModel
-            )
+            IconButton(onClick = {
+                openDialogDelete.value = true
             }) {
                 Icon(imageVector = Icons.Filled.Delete, contentDescription = "Delete")
+            }
+            if (openDialogDelete.value) {
+                AlertDialog(
+                    onDismissRequest = { openDialogDelete.value = false },
+                    title = { Text(text = "Подтвердите действие")},
+                    text = { Text(text = "Вы действительно хотите удалить выбранную заметку?")},
+                    confirmButton = { 
+                        Button(onClick = {
+                            noteDelete(
+                                noteId = noteId,
+                                onBackClick = {onBackClick()},
+                                viewModel = viewModel,
+                                openDialog = openDialogDelete.value
+                            )
+                            openDialogDelete.value = false
+                        }) {
+                            Text(text = "OK")
+                        }
+                    }
+                )
             }
             if (isVisible) {
                 IconButton(
@@ -72,10 +96,13 @@ fun NoteContentTopBar (
 fun noteDelete (
     noteId: Int,
     onBackClick: () -> Unit,
-    viewModel: NoteViewModel
+    viewModel: NoteViewModel,
+    openDialog: Boolean? = null
 ) {
-    viewModel.deleteNote(noteId)
-    onBackClick()
+    if (openDialog!!) {
+        viewModel.deleteNote(noteId)
+        onBackClick()
+    }
 }
 
 fun noteUpdate (
