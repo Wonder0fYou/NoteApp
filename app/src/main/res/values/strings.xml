@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NoteApp</string>
+    <string name="joke">Анекдот</string>
+    <string name="message">Появился, значит, в зоне, Черный Сталкер</string>
 </resources>

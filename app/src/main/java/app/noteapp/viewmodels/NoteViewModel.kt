@@ -55,8 +55,10 @@
 
         fun addNote (note: Note) {
             viewModelScope.launch {
+                note.title?.trim()
+                note.content?.trim()
                 noteRepository.insertNote(note)
-                withContext(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
                     _notes.value = noteRepository.getNotes().first()
                 }
             }
@@ -65,7 +67,7 @@
         fun deleteNote(noteId: Int) {
             viewModelScope.launch {
                 noteRepository.deleteNote(noteId)
-                withContext(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
                     _notes.value = noteRepository.getNotes().first()
                 }
             }
@@ -81,6 +83,8 @@
 
         fun updateNote(note: Note) {
             viewModelScope.launch {
+                note.title?.trim()
+                note.content?.trim()
                 noteRepository.updateNote(note)
                 _isVisible.value = false
             }

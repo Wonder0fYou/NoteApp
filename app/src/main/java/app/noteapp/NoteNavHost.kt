@@ -7,8 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import app.noteapp.compose.Screen
 import app.noteapp.compose.addnote.AddNoteScreen
+import app.noteapp.compose.alarmclock.AlarmClock
 import app.noteapp.compose.home.HomeScreen
 import app.noteapp.compose.notecontent.NoteContent
+import app.noteapp.compose.todo.ToDoScreen
 import app.noteapp.splash.SplashScreen
 import app.noteapp.viewmodels.NoteViewModel
 
@@ -78,6 +80,24 @@ fun NoteNavHost (
                 onBackClick = {
                     navController.popBackStack()
                 }
+            )
+        }
+
+        //AlarmClock
+        composable(
+            route = Screen.AlarmClock.route
+        ) {
+            AlarmClock(
+                drawerState = drawerState
+            )
+        }
+
+        //TodoScreen
+        composable(
+            route = Screen.ToDo.route
+        ) {
+            ToDoScreen(
+                drawerState = drawerState
             )
         }
     }
