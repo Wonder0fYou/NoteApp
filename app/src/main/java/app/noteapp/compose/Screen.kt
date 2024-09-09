@@ -40,4 +40,7 @@ sealed class Screen (
         route = "todoList",
         icon = Icons.AutoMirrored.Filled.List
     )
+    data object AddAlarmClock: Screen(
+        route = "addAlarmClockScreen"
+    )
 }

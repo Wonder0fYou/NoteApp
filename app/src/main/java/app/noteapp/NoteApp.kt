@@ -19,17 +19,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.noteapp.compose.Screen
+import app.noteapp.viewmodels.AlarmViewModel
 import app.noteapp.viewmodels.NoteViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun NoteApp () {
-    val uiViewModel = hiltViewModel<NoteViewModel>()
+    val noteViewModel = hiltViewModel<NoteViewModel>()
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route ?: Screen.Home
     val scope = rememberCoroutineScope()
+    val alarmViewModel = hiltViewModel<AlarmViewModel>()
 
     val screens = listOf(
         Screen.Home,
@@ -65,7 +67,12 @@ fun NoteApp () {
                 modifier = Modifier
                     .padding(top = it.calculateTopPadding())
             ) {
-                NoteNavHost(viewModel = uiViewModel, navController = navController, drawerState = drawerState)
+                AppNavHost(
+                    noteViewModel = noteViewModel,
+                    navController = navController,
+                    drawerState = drawerState,
+                    alarmViewModel = alarmViewModel
+                )
             }
         }
     }

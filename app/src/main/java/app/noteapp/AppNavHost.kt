@@ -7,18 +7,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import app.noteapp.compose.Screen
 import app.noteapp.compose.addnote.AddNoteScreen
+import app.noteapp.compose.alarmclock.AddAlarmScreen
 import app.noteapp.compose.alarmclock.AlarmClock
 import app.noteapp.compose.home.HomeScreen
 import app.noteapp.compose.notecontent.NoteContent
 import app.noteapp.compose.todo.ToDoScreen
 import app.noteapp.splash.SplashScreen
+import app.noteapp.viewmodels.AlarmViewModel
 import app.noteapp.viewmodels.NoteViewModel
 
 @Composable
-fun NoteNavHost (
-    viewModel: NoteViewModel,
+fun AppNavHost (
+    noteViewModel: NoteViewModel,
     navController: NavHostController,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    alarmViewModel: AlarmViewModel
 ) {
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
 
@@ -36,7 +39,7 @@ fun NoteNavHost (
         //HomeScreen
         composable(route = Screen.Home.route) {
             HomeScreen(
-                viewModel = viewModel,
+                viewModel = noteViewModel,
                 onNoteClick = {
                     navController.navigate(
                         Screen.NoteContent.createRoute(
@@ -60,7 +63,7 @@ fun NoteNavHost (
         ) { backStackEntry ->
             val noteId = backStackEntry.arguments?.getString("noteId")?.toIntOrNull() ?: -1
             NoteContent (
-                viewModel = viewModel,
+                viewModel = noteViewModel,
                 onBackClick = {
                     navController.navigateUp()
                 },
@@ -73,7 +76,7 @@ fun NoteNavHost (
             route = Screen.AddNote.route
         ) {
             AddNoteScreen (
-                viewModel = viewModel,
+                viewModel = noteViewModel,
                 onSaveClick = {
                     navController.popBackStack()
                 },
@@ -88,7 +91,28 @@ fun NoteNavHost (
             route = Screen.AlarmClock.route
         ) {
             AlarmClock(
-                drawerState = drawerState
+                drawerState = drawerState,
+                alarmViewModel = alarmViewModel,
+                onAddAlarm = {
+                    navController.navigate(
+                        Screen.AddAlarmClock.route
+                    )
+                }
+            )
+        }
+
+        //AddAlarm
+        composable(
+            route = Screen.AddAlarmClock.route
+        ) {
+            AddAlarmScreen(
+                onSaveClick = {
+                    navController.popBackStack()
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                viewModel = alarmViewModel
             )
         }
 

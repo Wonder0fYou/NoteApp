@@ -12,5 +12,16 @@ data class AlarmClock(
     var time: Int,
     var vibration: Boolean = false,
     var deleteAfterUse: Boolean = false,
-    var song: String = null.toString()
+    var song: String = null.toString(),
+    var dayOfTheWeek: DayOfWeek
 )
+
+enum class DayOfWeek{
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY
+}
