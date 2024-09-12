@@ -1,6 +1,5 @@
 package app.noteapp.compose.home.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,16 +34,16 @@ fun HomeContent (
         LazyColumn (
             modifier = Modifier
                 .fillMaxSize()
-                .padding(10.dp)
         ) {
             items(notes) { note ->
                 Card(
                     onClick = { onNoteClick(note)},
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 2.dp),
+                        .fillMaxWidth(),
                     shape = RectangleShape,
-                    border = BorderStroke(width = 1.dp , color = Color.Black)
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    )
                 ) {
                     note.title?.let {
                         Text(
@@ -61,7 +62,10 @@ fun HomeContent (
                         )
                     }
                 }
-
+                HorizontalDivider(
+                    color = Color.LightGray,
+                    thickness = 1.dp
+                )
             }
         }
     }
