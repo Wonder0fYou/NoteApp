@@ -61,6 +61,8 @@
                 withContext(Dispatchers.IO) {
                     _notes.value = noteRepository.getNotes().first()
                 }
+                _rememberTitle.value = ""
+                _rememberContent.value = ""
             }
         }
 
