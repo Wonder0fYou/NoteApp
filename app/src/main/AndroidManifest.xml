@@ -14,12 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NoteApp"
-        tools:targetApi="31">
+        tools:targetApi="29">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.NoteApp"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="orientation|screenSize|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

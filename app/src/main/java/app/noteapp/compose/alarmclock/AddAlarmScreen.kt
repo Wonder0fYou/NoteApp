@@ -4,6 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.focus.FocusRequester
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.noteapp.compose.alarmclock.components.AddAlarmTopBar
 import app.noteapp.compose.alarmclock.timeinput.ClockInput
@@ -16,7 +19,9 @@ fun AddAlarmScreen(
     viewModel: AlarmViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-//    var selectedTime = Calendar.getInstance()
+    val focusRequester = remember {
+        mutableStateOf(FocusRequester())
+    }
     Scaffold (
         topBar = {
             AddAlarmTopBar(
@@ -26,15 +31,9 @@ fun AddAlarmScreen(
             )
         }
     ){ paddingValues ->
-//        ClockPicker(
-//            paddingValues = paddingValues,
-//            selectedTime = selectedTime,
-//            onValueChange = { newTime ->
-//                selectedTime = newTime
-//            }
-//        )
         ClockInput(
-            paddingValues = paddingValues
+            paddingValues = paddingValues,
+            focusRequester = focusRequester
         )
     }
 }

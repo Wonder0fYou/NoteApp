@@ -7,21 +7,49 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "alarms")
 data class AlarmClock(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val alarmId: Int = 0,
-    var description: String = null.toString(),
-    var isEnabled: Boolean = false,
+    var description: String?,
+    var isEnabled: Boolean,
     var time: Int,
-    var vibration: Boolean = false,
-    var deleteAfterUse: Boolean = false,
-    var song: String = null.toString(),
-    var dayOfTheWeek: DayOfWeek
+    var vibration: Boolean,
+    var deleteAfterUse: Boolean,
+    var song: String,
+    val dayOfTheWeek: DayOfWeek
 )
 
 enum class DayOfWeek{
-    MONDAY,
-    TUESDAY,
-    WEDNESDAY,
-    THURSDAY,
-    FRIDAY,
-    SATURDAY,
-    SUNDAY
+    MONDAY {
+        override fun toString(): String {
+            return "monday"
+        }
+    },
+    TUESDAY {
+        override fun toString(): String {
+            return "tuesday"
+        }
+    },
+    WEDNESDAY {
+        override fun toString(): String {
+            return "wednesday"
+        }
+    },
+    THURSDAY {
+        override fun toString(): String {
+            return "thursday"
+        }
+    },
+    FRIDAY {
+        override fun toString(): String {
+            return "friday"
+        }
+    },
+    SATURDAY {
+        override fun toString(): String {
+            return "saturday"
+        }
+    },
+    SUNDAY {
+        override fun toString(): String {
+            return "sunday"
+        }
+    }
 }
