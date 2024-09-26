@@ -3,6 +3,7 @@
     <string name="app_name">NoteApp</string>
     <string name="joke">Анекдот</string>
     <string name="message">Появился, значит, в зоне, Черный Сталкер</string>
+    <!-- AlarmClock -->
     <string name="text_description">Добавить описание</string>
     <string name="ok">ОК</string>
     <string name="cancel">Отмена</string>
@@ -14,4 +15,13 @@
     <string name="delete_after_use">Удалить после срабатывания</string>
     <string name="vibrate_at_a_signal">Вибрировать при сигнале</string>
     <string name="replay">Повтор</string>
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="sunday">Воскресенье</string>
+    <string name="once">Однократно</string>
+    <string name="everyday">Ежедневно</string>
 </resources>

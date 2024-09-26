@@ -13,7 +13,7 @@ data class AlarmClock(
     var vibration: Boolean,
     var deleteAfterUse: Boolean,
     var song: String,
-    val dayOfTheWeek: DayOfWeek
+    val dayOfTheWeek: Set<DayOfWeek>
 )
 
 enum class DayOfWeek{

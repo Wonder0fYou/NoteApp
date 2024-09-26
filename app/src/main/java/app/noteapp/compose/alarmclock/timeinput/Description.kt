@@ -41,7 +41,9 @@ import app.noteapp.R
 @Composable
 fun Description (
     onDescriptionClick: () -> Unit,
-    openDialogDescription: MutableState<Boolean>
+    openDialogDescription: MutableState<Boolean>,
+    description: String,
+    onDescriptionChange: (String) -> Unit
 ) {
     var textDescription by remember {
         mutableStateOf("")
@@ -101,8 +103,8 @@ fun Description (
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     OutlinedTextField(
-                        value = textDescription,
-                        onValueChange = { textDescription = it },
+                        value = description,
+                        onValueChange = onDescriptionChange,
                         label = { Text(text = stringResource(id = R.string.text_description)) },
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color.White,

@@ -21,6 +21,21 @@ class AlarmViewModel @Inject constructor(
     private val _alarm = MutableStateFlow<AlarmClock?>(null)
     val alarm: StateFlow<AlarmClock?> = _alarm
 
+    private val _userChoice = MutableStateFlow(1)
+    val userChoice: StateFlow<Int> = _userChoice.asStateFlow()
+
+    companion object SelectedDays {
+        val listOfWeek = setOf(
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        )
+    }
+
     init {
         loadAlarms()
     }

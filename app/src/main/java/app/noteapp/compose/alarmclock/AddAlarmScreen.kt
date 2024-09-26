@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.focus.FocusRequester
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.noteapp.compose.alarmclock.components.AddAlarmTopBar
+import app.noteapp.compose.alarmclock.model.AlarmClockItem
 import app.noteapp.compose.alarmclock.timeinput.ClockInput
 import app.noteapp.viewmodels.AlarmViewModel
 
@@ -19,6 +20,15 @@ fun AddAlarmScreen(
     viewModel: AlarmViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
+    var alarmClockItem = AlarmClockItem (
+        description = "",
+        isEnabled = true,
+        time = 0,
+        vibration = false,
+        deleteAfterUse = false,
+        song = "",
+        dayOfTheWeek = emptySet()
+    )
     val focusRequester = remember {
         mutableStateOf(FocusRequester())
     }
@@ -27,13 +37,17 @@ fun AddAlarmScreen(
             AddAlarmTopBar(
                 onSaveClick = {onSaveClick()},
                 viewModel = viewModel,
-                onBackClick = {onBackClick()}
+                onBackClick = {onBackClick()},
             )
         }
     ){ paddingValues ->
         ClockInput(
             paddingValues = paddingValues,
-            focusRequester = focusRequester
+            focusRequester = focusRequester,
+            alarmClockItem = {
+                alarmClockItem = it
+            },
+            viewModel = viewModel
         )
     }
 }

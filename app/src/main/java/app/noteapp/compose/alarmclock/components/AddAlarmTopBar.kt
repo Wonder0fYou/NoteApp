@@ -12,6 +12,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import app.noteapp.compose.alarmclock.model.AlarmClockItem
 import app.noteapp.viewmodels.AlarmViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,7 +20,7 @@ import app.noteapp.viewmodels.AlarmViewModel
 fun AddAlarmTopBar(
     onSaveClick: () -> Unit,
     viewModel: AlarmViewModel,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
 ) {
     TopAppBar(
         title = { Text(

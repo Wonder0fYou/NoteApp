@@ -25,7 +25,9 @@ class DatabaseModule {
     fun provideNoteDatabase(
         @ApplicationContext
         context: Context
-    ) = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).build()
+    ) = Room.databaseBuilder(
+        context, AppDatabase::class.java, DATABASE_NAME
+    ).build()
 
     @Provides
     fun provideNoteDao(appDatabase: AppDatabase) = appDatabase.noteDao()
