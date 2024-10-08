@@ -1,0 +1,32 @@
+package app.noteapp.di
+
+import android.app.Application
+import android.content.Context
+import app.data.di.DatabaseModule
+import app.data.di.RepositoryModule
+import app.noteapp.NoteApplication
+import app.noteapp.MainActivity
+import app.presentation.di.UiModule
+import dagger.BindsInstance
+import dagger.Component
+import javax.inject.Singleton
+
+@Component(
+    modules = [DatabaseModule::class,
+              RepositoryModule::class,
+              UiModule::class],
+)
+@Singleton
+interface AppComponent {
+    @Component.Factory
+    interface Factory {
+        fun create(
+            @BindsInstance app: Application,
+            @BindsInstance context: Context,
+        ): AppComponent
+    }
+
+    fun inject(app: NoteApplication)
+    fun inject(activity: MainActivity)
+
+}

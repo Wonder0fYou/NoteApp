@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="joke">Анекдот</string>
+    <string name="message">Появился, значит, в зоне, Черный Сталкер</string>
+    <!-- AlarmClock -->
+    <string name="description" translation_description = "">Description</string>
+    <string name="text_description" tranlation_description ="">Add a description</string>
+    <string name="ok">ОК</string>
+    <string name="cancel" tranlation_description ="">Cancel</string>
+    <string name="add_description_alarm" tranlation_description ="">Add description alarm</string>
+    <string name="default_melody" tranlation_description ="">The default melody</string>
+    <string name="melody" tranlation_description ="">Melody</string>
+    <string name="music_list" tranlation_description ="">Music list</string>
+    <string name="delete_after_use" tranlation_description ="">Delete after use</string>
+    <string name="vibrate_at_a_signal" tranlation_description ="">Vibrate at a signal</string>
+    <string name="replay" tranlation_description ="">Replay</string>
+    <string name="monday" tranlation_description ="">Monday</string>
+    <string name="tuesday" tranlation_description ="">Tuesday</string>
+    <string name="wednesday" tranlation_description ="">Wednesday</string>
+    <string name="thursday" tranlation_description ="">Thursday</string>
+    <string name="friday" tranlation_description ="">Friday</string>
+    <string name="saturday" tranlation_description ="">Saturday</string>
+    <string name="sunday" tranlation_description ="">Sunday</string>
+    <string name="once" tranlation_description ="">Once</string>
+    <string name="everyday" tranlation_description ="">Everyday</string>
+    <string name="new_alarm" tranlation_description ="">New alarm</string>
+</resources>

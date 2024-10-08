@@ -1,0 +1,69 @@
+package app.presentation.compose.alarmclock.components
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import app.domain.entity.AlarmClockItem
+import app.presentation.R
+import app.presentation.viewmodels.AlarmViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddAlarmTopBar(
+    onSaveClick: () -> Unit,
+    viewModel: AlarmViewModel,
+    onBackClick: () -> Unit,
+    alarmClockItem: AlarmClockItem
+) {
+    TopAppBar(
+        title = { Text(
+            text = stringResource(id = R.string.new_alarm),
+            modifier = Modifier
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )},
+        navigationIcon = {
+            IconButton(onClick = {onBackClick()}) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close"
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = {
+                addAlarm(
+                    viewModel = viewModel,
+                    alarmClockItem = alarmClockItem,
+                    onSaveClick = {onSaveClick()}
+                )
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "AddAlarm"
+                )
+            }
+        }
+    )
+}
+
+fun addAlarm (
+    viewModel: AlarmViewModel,
+    alarmClockItem: AlarmClockItem,
+    onSaveClick: () -> Unit
+) {
+    viewModel.addAlarm(
+        alarmClockItem
+    )
+    onSaveClick()
+}

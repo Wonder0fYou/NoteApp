@@ -1,4 +1,11 @@
+rootProject.name = "NoteApp"
+
+include(":app")
+include(":domain")
+include(":data")
+
 pluginManagement {
+//    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -18,7 +25,4 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "NoteApp"
-include(":app")
- 
+include(":presentation")
