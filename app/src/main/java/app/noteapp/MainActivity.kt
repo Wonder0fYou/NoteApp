@@ -6,29 +6,20 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import app.presentation.NoteApp
 import app.presentation.theme.NoteAppTheme
-import app.presentation.viewmodels.AlarmViewModel
-import app.presentation.viewmodels.NoteViewModel
+import app.presentation.alarm.viewmodels.AlarmViewModel
+import app.presentation.note.viewmodels.NoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var noteViewModel: NoteViewModel
-
-    @Inject
-    lateinit var alarmViewModel: AlarmViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val appComponent = (application as NoteApplication).appComponent
-        appComponent.inject(this)
         // Displaying edge-to-edge
         enableEdgeToEdge()
         setContent {
             NoteAppTheme {
                 NoteApp(
-                    noteViewModel = noteViewModel,
-                    alarmViewModel = alarmViewModel
                 )
             }
         }

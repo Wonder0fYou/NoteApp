@@ -8,14 +8,17 @@ import app.data.database.AppDatabase
 import app.data.database.dao.AlarmDao
 import app.data.database.dao.NoteDao
 import dagger.Module
-import javax.inject.Singleton
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 
 @Module
+@InstallIn(SingletonComponent::class)
 class DatabaseModule {
 
     @Provides
-    @Singleton
     fun provideAppDatabase(
+        @ApplicationContext
         context: Context
     ): AppDatabase {
         return Room.databaseBuilder(
@@ -26,13 +29,11 @@ class DatabaseModule {
     }
 
     @Provides
-    @Singleton
     fun provideNoteDao(appDatabase: AppDatabase): NoteDao {
         return appDatabase.noteDao()
     }
 
     @Provides
-    @Singleton
     fun provideAlarmDao(appDatabase: AppDatabase): AlarmDao {
         return appDatabase.alarmDao()
     }

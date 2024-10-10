@@ -2,26 +2,27 @@ package app.presentation
 
 import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import app.presentation.compose.Screen
-import app.presentation.compose.addnote.AddNoteScreen
-import app.presentation.compose.alarmclock.AddAlarmScreen
-import app.presentation.compose.alarmclock.AlarmClock
-import app.presentation.compose.home.HomeScreen
+import app.presentation.note.addnote.AddNoteScreen
+import app.presentation.alarm.alarmclock.AddAlarmScreen
+import app.presentation.alarm.alarmclock.AlarmClock
+import app.presentation.note.home.HomeScreen
 import app.presentation.compose.todo.ToDoScreen
 import app.presentation.splash.SplashScreen
-import app.presentation.compose.notecontent.NoteContent
-import app.presentation.viewmodels.AlarmViewModel
-import app.presentation.viewmodels.NoteViewModel
+import app.presentation.note.notecontent.NoteContent
+import app.presentation.alarm.viewmodels.AlarmViewModel
+import app.presentation.note.viewmodels.NoteViewModel
 
 @Composable
 fun AppNavHost (
     navController: NavHostController,
     drawerState: DrawerState,
-    noteViewModel: NoteViewModel,
-    alarmViewModel: AlarmViewModel
+    noteViewModel: NoteViewModel = hiltViewModel(),
+    alarmViewModel: AlarmViewModel = hiltViewModel()
 ) {
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
 

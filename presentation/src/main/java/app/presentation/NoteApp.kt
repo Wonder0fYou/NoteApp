@@ -16,17 +16,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import app.presentation.viewmodels.AlarmViewModel
-import app.presentation.viewmodels.NoteViewModel
+import app.presentation.alarm.viewmodels.AlarmViewModel
+import app.presentation.note.viewmodels.NoteViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun NoteApp (
-    noteViewModel: NoteViewModel,
-    alarmViewModel: AlarmViewModel
 ) {
+    val noteViewModel: NoteViewModel = hiltViewModel<NoteViewModel>()
+    val alarmViewModel: AlarmViewModel = hiltViewModel<AlarmViewModel>()
     val navController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val currentBackStackEntry by navController.currentBackStackEntryAsState()

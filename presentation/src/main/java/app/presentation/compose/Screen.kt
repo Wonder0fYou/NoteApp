@@ -15,7 +15,9 @@ sealed class Screen (
     val icon: ImageVector? = null,
     val navArgument: List<NamedNavArgument> = emptyList()
 ) {
+    //splash screen
     data object Splash: Screen(route = "splashScreen")
+    //note screens
     data object Home: Screen(
         title = "Notes",
         route = "homeScreen",
@@ -30,17 +32,19 @@ sealed class Screen (
     ) {
         fun createRoute(noteId: String) = "noteContent/${noteId}"
     }
+    //alarm screens
     data object AlarmClock: Screen(
         title = "Alarm Clock",
         route = "alarmClock",
         icon = Icons.Default.Phone
     )
+    data object AddAlarmClock: Screen(
+        route = "addAlarmClockScreen"
+    )
+    //To Do screens
     data object ToDo: Screen(
         title = "To-Do List",
         route = "todoList",
         icon = Icons.AutoMirrored.Filled.List
-    )
-    data object AddAlarmClock: Screen(
-        route = "addAlarmClockScreen"
     )
 }

@@ -9,34 +9,31 @@ import app.domain.repository.AlarmClockRepository
 import app.domain.repository.NoteRepository
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-interface RepositoryModule {
-    companion object {
+@InstallIn(SingletonComponent::class)
+class RepositoryModule {
+    @Provides
+    fun provideAppMapper(): AppMapper {
+        return AppMapper()
+    }
 
-        @Provides
-        @Singleton
-        fun provideAppMapper(): AppMapper {
-            return AppMapper()
-        }
+    @Provides
+    fun provideNoteRepository(
+        noteDao: NoteDao,
+        appMapper: AppMapper
+    ): NoteRepository {
+        return NoteRepositoryImpl(noteDao, appMapper)
+    }
 
-        @Provides
-        @Singleton
-        fun provideNoteRepository(
-            noteDao: NoteDao,
-            appMapper: AppMapper
-        ): NoteRepository {
-            return NoteRepositoryImpl(noteDao, appMapper)
-        }
-
-        @Provides
-        @Singleton
-        fun provideAlarmClockRepository(
-            alarmDao: AlarmDao,
-            appMapper: AppMapper
-        ): AlarmClockRepository {
-            return AlarmClockRepositoryImpl(alarmDao, appMapper)
-        }
+    @Provides
+    fun provideAlarmClockRepository(
+        alarmDao: AlarmDao,
+        appMapper: AppMapper
+    ): AlarmClockRepository {
+        return AlarmClockRepositoryImpl(alarmDao, appMapper)
     }
 }
