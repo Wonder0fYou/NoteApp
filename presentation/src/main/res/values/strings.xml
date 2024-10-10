@@ -24,4 +24,13 @@
     <string name="once" tranlation_description ="">Once</string>
     <string name="everyday" tranlation_description ="">Everyday</string>
     <string name="new_alarm" tranlation_description ="">New alarm</string>
+    <string name="mon" tranlation_description ="">Mon</string>
+    <string name="tue" tranlation_description ="">Tue</string>
+    <string name="wed" tranlation_description ="">Wed</string>
+    <string name="thu" tranlation_description ="">Thu</string>
+    <string name="fri" tranlation_description ="">Fri</string>
+    <string name="sat" tranlation_description ="">Sat</string>
+    <string name="sun" tranlation_description ="">Sun</string>
+    <string name="alarms" tranlation_description ="">Alarms</string>
+    <string name="alarm" tranlation_description ="">Alarm</string>
 </resources>

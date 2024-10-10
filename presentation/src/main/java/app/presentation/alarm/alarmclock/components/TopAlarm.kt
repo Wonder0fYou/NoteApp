@@ -10,16 +10,20 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import app.domain.entity.AlarmClockItem
+import app.presentation.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAlarm (
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    alarms: List<AlarmClockItem>
 ) {
     val scope = rememberCoroutineScope()
-
+    val topName: String = stringResource(id = if (alarms.size == 1) R.string.alarm else R.string.alarms)
     TopAppBar(
         navigationIcon = {
             IconButton(onClick = {
@@ -28,6 +32,11 @@ fun TopAlarm (
                 Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
             }
         },
-        title = { Text(text = "Будильник" , fontSize = 30.sp)}
+        title = {
+            Text(
+                text = topName,
+                fontSize = 30.sp
+            )
+        }
     )
 }

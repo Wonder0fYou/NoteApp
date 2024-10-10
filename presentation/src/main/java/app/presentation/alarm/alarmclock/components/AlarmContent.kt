@@ -1,33 +1,48 @@
 package app.presentation.alarm.alarmclock.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import app.domain.entity.AlarmClockItem
+import app.domain.entity.DayOfWeek
+import app.presentation.R
 import app.presentation.alarm.viewmodels.AlarmViewModel
 
 @Composable
 fun AlarmContent(
-    paddingValues: PaddingValues,
+    paddingValues: PaddingValues = PaddingValues(0.dp),
     alarms: List<AlarmClockItem>,
     onAlarmClockClick: (AlarmClockItem) -> Unit,
-    viewModel: AlarmViewModel
+    viewModel: AlarmViewModel = hiltViewModel()
 ) {
     Column (
         modifier = Modifier
@@ -40,30 +55,86 @@ fun AlarmContent(
         ){
             items(alarms) { alarm ->
                 val switchIsEnabled = rememberSaveable {
-                    mutableStateOf(false)
+                    mutableStateOf(alarm.isEnabled)
                 }
                 Card(
                     onClick = { onAlarmClockClick(alarm)},
                     modifier = Modifier
+                        .height(120.dp)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                         .fillMaxWidth(),
                     shape = RectangleShape,
                     colors = CardDefaults.cardColors(
                         containerColor = Color.White
-                    )
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
-                    Text(text = alarm.minutesFromStartOfDay.toString())
-                    Row(
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .fillMaxSize()
+                            .padding(16.dp)
                     ) {
-                        Card {
-                            alarm.dayOfTheWeek
+                        Row (
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            val hours = alarm.minutesFromStartOfDay / 60
+                            val minutes = alarm.minutesFromStartOfDay % 60
+                            val formattedTime = String.format("%02d:%02d", hours, minutes)
+                            Text(
+                                text = formattedTime,
+                                fontSize = 24.sp,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Switch(
+                                checked = switchIsEnabled.value,
+                                onCheckedChange = {
+                                    switchIsEnabled.value = it
+                                },
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            DayOfWeek.entries.forEach { day ->
+                                val isActive = day in alarm.dayOfTheWeek
+                                val textColor = if (isActive) Color.Blue else Color.Gray
+                                Box(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clickable {
+                                            alarm.dayOfTheWeek = if (isActive) {
+                                                alarm.dayOfTheWeek.minus(day)
+                                            } else {
+                                                alarm.dayOfTheWeek.plus(day)
+                                            }
+                                        },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = stringResource(
+                                            id = when (day) {
+                                                DayOfWeek.MONDAY -> R.string.mon
+                                                DayOfWeek.TUESDAY -> R.string.tue
+                                                DayOfWeek.WEDNESDAY -> R.string.wed
+                                                DayOfWeek.THURSDAY -> R.string.thu
+                                                DayOfWeek.FRIDAY -> R.string.fri
+                                                DayOfWeek.SATURDAY -> R.string.sat
+                                                DayOfWeek.SUNDAY -> R.string.sun
+                                                else -> R.string.mon
+                                            }
+                                        ),
+                                        fontSize = 12.sp,
+                                        color = textColor,
+                                    )
+                                }
+                            }
                         }
                     }
-                    HorizontalDivider(
-                        color = Color.LightGray,
-                        thickness = 1.dp
-                    )
                 }
             }
         }
