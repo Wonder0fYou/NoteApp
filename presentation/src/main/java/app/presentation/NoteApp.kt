@@ -52,7 +52,11 @@ fun NoteApp (
             ) {
                 screens.forEach { screen ->
                     NavigationDrawerItem(
-                        label = { screen.title?.let { Text(text = it) } },
+                        label = {
+                            screen.title?.let { Text(
+                                text = it,
+                                style = MaterialTheme.typography.titleMedium
+                            )}},
                         icon = {
                             screen.icon?.let { Icon(imageVector = it, contentDescription = "${screen.title} icon") }
                         },

@@ -76,8 +76,9 @@ fun Description (
         ) {
             Text(
                 text = stringResource(id = R.string.description),
-                fontSize = 22.sp,
-                color = MaterialTheme.colorScheme.onSurface
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             )
             Spacer(modifier = Modifier.weight(1f))
             Image(
@@ -109,7 +110,9 @@ fun Description (
                 ) {
                     Text(
                         text = stringResource(id = R.string.add_description_alarm),
-                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = MaterialTheme.colorScheme.onBackground
+                        ),
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                     )
@@ -151,7 +154,7 @@ fun Description (
                         }
                     }
                 }
-                    }
+                }
             }
         )
     }

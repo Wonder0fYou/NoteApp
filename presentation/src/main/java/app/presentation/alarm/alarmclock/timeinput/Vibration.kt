@@ -42,8 +42,9 @@ fun Vibration (
         ) {
             Text(
                 text = stringResource(id = R.string.vibrate_at_a_signal),
-                fontSize = 22.sp,
-                color = MaterialTheme.colorScheme.onSurface
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             )
             Spacer(modifier = Modifier.weight(1f))
             Switch(

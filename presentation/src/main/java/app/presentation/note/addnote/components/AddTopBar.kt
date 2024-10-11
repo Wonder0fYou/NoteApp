@@ -28,7 +28,9 @@ fun AddTopBar(
     TopAppBar(
         title = { Text(
             text = stringResource(id = R.string.add_note),
-            color = MaterialTheme.colorScheme.onPrimary
+            style = MaterialTheme.typography.titleLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         )},
         navigationIcon = {
             IconButton(onClick = {onBackClick()}) {

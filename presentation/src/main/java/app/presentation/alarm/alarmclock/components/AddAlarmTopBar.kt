@@ -31,7 +31,10 @@ fun AddAlarmTopBar(
             modifier = Modifier
                 .fillMaxWidth(),
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onPrimary
+            style = MaterialTheme.typography.titleLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimary,
+                textAlign = TextAlign.Center
+            )
         )},
         navigationIcon = {
             IconButton(onClick = {onBackClick()}) {

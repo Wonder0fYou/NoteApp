@@ -82,9 +82,10 @@ fun AlarmContent(
                             val formattedTime = String.format("%02d:%02d", hours, minutes)
                             Text(
                                 text = formattedTime,
-                                fontSize = 24.sp,
+                                style = MaterialTheme.typography.headlineMedium.copy(
+                                    color = MaterialTheme.colorScheme.onSurface
+                                ),
                                 modifier = Modifier.weight(1f),
-                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Switch(
                                 checked = switchIsEnabled.value,

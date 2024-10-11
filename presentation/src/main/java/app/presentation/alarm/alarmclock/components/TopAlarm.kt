@@ -41,8 +41,9 @@ fun TopAlarm (
         title = {
             Text(
                 text = topName,
-                fontSize = 30.sp,
-                color = MaterialTheme.colorScheme.onPrimary
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(

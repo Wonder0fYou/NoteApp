@@ -56,13 +56,16 @@ fun Melody (
         ) {
             Text(
                 text = stringResource(id = R.string.melody),
-                fontSize = 22.sp,
-                color = MaterialTheme.colorScheme.onSurface
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = stringResource(id = R.string.default_melody),
-                color = MaterialTheme.colorScheme.onSurface
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             )
         }
     }
@@ -80,8 +83,9 @@ fun Melody (
                 ){
                     Text(
                         text = stringResource(id = R.string.music_list),
-                        fontSize = 25.sp,
-                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            color = MaterialTheme.colorScheme.onBackground
+                        ),
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally),
                     )

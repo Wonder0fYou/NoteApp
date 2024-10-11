@@ -35,7 +35,11 @@ fun AddContent (
                 .fillMaxWidth(),
             value = title,
             onValueChange = onTitleChange,
-            label = { Text(text = stringResource(id = R.string.title)) },
+            label = {
+                Text(
+                    text = stringResource(id = R.string.title),
+                    style = MaterialTheme.typography.bodyLarge
+                )},
             colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.colorScheme.onSurface,
                 unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
@@ -45,7 +49,8 @@ fun AddContent (
                 unfocusedIndicatorColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                 focusedLabelColor = MaterialTheme.colorScheme.primary,
                 unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-            )
+            ),
+            textStyle = MaterialTheme.typography.bodyLarge
         )
         TextField(
             modifier = Modifier
@@ -62,7 +67,12 @@ fun AddContent (
                 unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
             ),
             onValueChange = onContentChange,
-            label = { Text(text = stringResource(id = R.string.content)) },
+            label = {
+                Text(
+                    text = stringResource(id = R.string.content),
+                    style = MaterialTheme.typography.bodyLarge
+            )},
+            textStyle = MaterialTheme.typography.bodyLarge
         )
     }
 }

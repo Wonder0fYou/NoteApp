@@ -14,7 +14,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.sp
 import app.domain.entity.NoteItem
 import app.presentation.R
 import kotlinx.coroutines.launch
@@ -41,9 +40,10 @@ fun HomeTopBar(
         },
         title = {
             Text(
-                topText,
-                fontSize = 30.sp,
-                color = MaterialTheme.colorScheme.onPrimary
+                text = topText,
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             )},
         actions = {
             IconButton(onClick = {

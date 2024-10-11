@@ -72,8 +72,9 @@ fun Replay (
         ) {
             Text(
                 text = stringResource(id = R.string.replay),
-                fontSize = 22.sp,
-                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurface
+                ),
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.weight(1f))
@@ -137,8 +138,8 @@ fun Replay (
                                                 else -> R.string.monday
                                             }
                                         ),
-                                        fontSize = 20.sp,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        style = MaterialTheme.typography.bodyLarge.copy(
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant),
                                         modifier = Modifier
                                             .padding(10.dp)
                                     )

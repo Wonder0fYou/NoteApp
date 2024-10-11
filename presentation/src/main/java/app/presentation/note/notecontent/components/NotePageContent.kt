@@ -27,6 +27,7 @@ fun NotePageContent (
                 .fillMaxWidth(),
             value = title,
             onValueChange = onTitleChange,
+            textStyle = MaterialTheme.typography.bodyLarge,
             colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.colorScheme.onSurface,
                 unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
@@ -43,6 +44,7 @@ fun NotePageContent (
                 .fillMaxSize(),
             value = content,
             onValueChange = onContentChange,
+            textStyle = MaterialTheme.typography.bodyLarge,
             colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.colorScheme.onSurface,
                 unfocusedTextColor = MaterialTheme.colorScheme.onSurface,

@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import app.domain.entity.NoteItem
 
 @Composable
@@ -50,8 +49,9 @@ fun HomeContent (
                             text = it,
                             modifier = Modifier
                                 .padding(vertical = 2.dp, horizontal = 10.dp),
-                            fontSize = 22.sp,
-                            color = MaterialTheme.colorScheme.onSurface
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
                         )
                     }
                     note.content?.let {
@@ -60,7 +60,9 @@ fun HomeContent (
                             modifier = Modifier
                                 .padding(vertical = 2.dp, horizontal = 10.dp),
                             maxLines = 1,
-                            color = MaterialTheme.colorScheme.onSurface
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
                         )
                     }
                 }

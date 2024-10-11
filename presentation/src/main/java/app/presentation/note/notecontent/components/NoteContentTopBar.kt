@@ -38,7 +38,9 @@ fun NoteContentTopBar (
     TopAppBar(
         title = { Text(
             text = stringResource(id = R.string.content_of_the_note),
-            color = MaterialTheme.colorScheme.onPrimary
+            style = MaterialTheme.typography.titleLarge.copy(
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         ) },
         navigationIcon = {
             IconButton(onClick = {
@@ -70,8 +72,16 @@ fun NoteContentTopBar (
             if (openDialogDelete.value) {
                 AlertDialog(
                     onDismissRequest = { openDialogDelete.value = false },
-                    title = { Text(text = stringResource(id = R.string.confirm_the_action))},
-                    text = { Text(text = stringResource(id = R.string.want_to_delete_note))},
+                    title = {
+                        Text(
+                            text = stringResource(id = R.string.confirm_the_action),
+                            style = MaterialTheme.typography.titleMedium
+                        )},
+                    text = {
+                        Text(
+                            text = stringResource(id = R.string.want_to_delete_note),
+                            style = MaterialTheme.typography.bodyMedium
+                        )},
                     confirmButton = { 
                         Button(onClick = {
                             noteDelete(
