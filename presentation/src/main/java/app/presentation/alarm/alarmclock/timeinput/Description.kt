@@ -15,8 +15,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -30,7 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -39,6 +42,7 @@ import androidx.compose.ui.window.Dialog
 import app.presentation.R
 import app.presentation.alarm.viewmodels.AlarmViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Description (
     onDescriptionClick: () -> Unit,
@@ -55,7 +59,7 @@ fun Description (
     }
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface
         ),
         shape = RectangleShape,
         modifier = Modifier
@@ -72,12 +76,14 @@ fun Description (
         ) {
             Text(
                 text = stringResource(id = R.string.description),
-                fontSize = 22.sp
+                fontSize = 22.sp,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.weight(1f))
             Image(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = "Description"
+                contentDescription = "Description",
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
             )
         }
     }
@@ -91,6 +97,9 @@ fun Description (
                         .height(200.dp)
                         .padding(16.dp),
                     shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.background
+                    )
                 ) {
                 Column(
                     modifier = Modifier
@@ -100,6 +109,7 @@ fun Description (
                 ) {
                     Text(
                         text = stringResource(id = R.string.add_description_alarm),
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                     )
@@ -108,9 +118,11 @@ fun Description (
                         value = description,
                         onValueChange = onDescriptionChange,
                         label = { Text(text = stringResource(id = R.string.text_description)) },
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = Color.White,
-                            focusedContainerColor = Color.White
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary
                         ),
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
@@ -121,13 +133,19 @@ fun Description (
                             onClick = {
                                 openDialogDescription.value = false
                                 textDescription = ""
-                            }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            )
                         ) {
                             Text(text = stringResource(id = R.string.cancel))
                         }
                         Spacer(modifier = Modifier.weight(1f))
                         Button(
-                            onClick = { viewModel.addDescription(description) }
+                            onClick = { viewModel.addDescription(description) },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            )
                         ) {
                             Text(text = stringResource(id = R.string.ok))
                         }

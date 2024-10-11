@@ -12,23 +12,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -65,7 +63,7 @@ fun AlarmContent(
                         .fillMaxWidth(),
                     shape = RectangleShape,
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.White
+                        containerColor = MaterialTheme.colorScheme.surface
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
@@ -85,13 +83,18 @@ fun AlarmContent(
                             Text(
                                 text = formattedTime,
                                 fontSize = 24.sp,
-                                modifier = Modifier.weight(1f)
+                                modifier = Modifier.weight(1f),
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Switch(
                                 checked = switchIsEnabled.value,
                                 onCheckedChange = {
                                     switchIsEnabled.value = it
                                 },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                                    uncheckedThumbColor = MaterialTheme.colorScheme.onSurface
+                                )
                             )
                         }
                         Spacer(modifier = Modifier.height(2.dp))
@@ -102,11 +105,12 @@ fun AlarmContent(
                         ) {
                             DayOfWeek.entries.forEach { day ->
                                 val isActive = day in alarm.dayOfTheWeek
-                                val textColor = if (isActive) Color.Blue else Color.Gray
+                                val textColor = if (isActive) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                                 Box(
                                     modifier = Modifier
                                         .size(40.dp)
                                         .clickable {
+                                            //add update with viewmodel
                                             alarm.dayOfTheWeek = if (isActive) {
                                                 alarm.dayOfTheWeek.minus(day)
                                             } else {

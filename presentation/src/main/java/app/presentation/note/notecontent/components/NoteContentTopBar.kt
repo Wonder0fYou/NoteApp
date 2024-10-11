@@ -9,12 +9,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import app.domain.entity.NoteItem
+import app.presentation.R
 import app.presentation.note.viewmodels.NoteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +36,10 @@ fun NoteContentTopBar (
         mutableStateOf(false)
     }
     TopAppBar(
-        title = { Text("Содержимое заметки") },
+        title = { Text(
+            text = stringResource(id = R.string.content_of_the_note),
+            color = MaterialTheme.colorScheme.onPrimary
+        ) },
         navigationIcon = {
             IconButton(onClick = {
                 backUpdate(
@@ -43,20 +50,28 @@ fun NoteContentTopBar (
                     onBackClick = {onBackClick()}
                 )
             }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         },
         actions = {
             IconButton(onClick = {
                 openDialogDelete.value = true
             }) {
-                Icon(imageVector = Icons.Filled.Delete, contentDescription = "Delete")
+                Icon(
+                    imageVector = Icons.Filled.Delete,
+                    contentDescription = "Delete",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
             if (openDialogDelete.value) {
                 AlertDialog(
                     onDismissRequest = { openDialogDelete.value = false },
-                    title = { Text(text = "Подтвердите действие")},
-                    text = { Text(text = "Вы действительно хотите удалить выбранную заметку?")},
+                    title = { Text(text = stringResource(id = R.string.confirm_the_action))},
+                    text = { Text(text = stringResource(id = R.string.want_to_delete_note))},
                     confirmButton = { 
                         Button(onClick = {
                             noteDelete(
@@ -67,7 +82,7 @@ fun NoteContentTopBar (
                             )
                             openDialogDelete.value = false
                         }) {
-                            Text(text = "OK")
+                            Text(text = stringResource(id = R.string.ok))
                         }
                     }
                 )
@@ -85,11 +100,16 @@ fun NoteContentTopBar (
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Check,
-                        contentDescription = "Update note"
+                        contentDescription = "Update note",
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }
         },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        )
     )
 }
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TimeInput
 import androidx.compose.material3.TimePickerDefaults
@@ -21,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.presentation.alarm.viewmodels.AlarmViewModel
@@ -66,13 +66,15 @@ fun ClockInput(
         Surface (
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .focusRequester(focusRequester.value)
+                .focusRequester(focusRequester.value),
+            color = MaterialTheme.colorScheme.surface
         ) {
             TimeInput(
                 state = timePickerState,
                 colors = TimePickerDefaults.colors(
-                    timeSelectorUnselectedContainerColor = Color.White,
-                    timeSelectorSelectedContainerColor = Color.White
+                    timeSelectorUnselectedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    timeSelectorSelectedContainerColor = MaterialTheme.colorScheme.primary,
+                    timeSelectorSelectedContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)

@@ -7,13 +7,14 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import app.domain.entity.AlarmClockItem
 import app.presentation.R
 import app.presentation.alarm.viewmodels.AlarmViewModel
 
@@ -29,13 +30,15 @@ fun AddAlarmTopBar(
             text = stringResource(id = R.string.new_alarm),
             modifier = Modifier
                 .fillMaxWidth(),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onPrimary
         )},
         navigationIcon = {
             IconButton(onClick = {onBackClick()}) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Close"
+                    contentDescription = "Close",
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
@@ -48,10 +51,14 @@ fun AddAlarmTopBar(
             }) {
                 Icon(
                     imageVector = Icons.Default.Check,
-                    contentDescription = "AddAlarm"
+                    contentDescription = "AddAlarm",
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        )
     )
 }
 

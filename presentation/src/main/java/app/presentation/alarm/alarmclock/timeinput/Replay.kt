@@ -13,8 +13,10 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -25,7 +27,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -57,7 +58,7 @@ fun Replay (
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface
         ),
         shape = RectangleShape,
         modifier = Modifier
@@ -72,12 +73,14 @@ fun Replay (
             Text(
                 text = stringResource(id = R.string.replay),
                 fontSize = 22.sp,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = "Choose music"
+                contentDescription = "Choose music",
+                tint = MaterialTheme.colorScheme.onSurface
             )
         }
     }
@@ -85,6 +88,8 @@ fun Replay (
         ModalBottomSheet(
             onDismissRequest = { openBottomSheetReplay.value = false },
             sheetState = sheetState,
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground,
             content = {
                 Column (
                     modifier = Modifier
@@ -108,6 +113,9 @@ fun Replay (
                                 }))
                             }
                             Card (
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                                ),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
@@ -130,6 +138,7 @@ fun Replay (
                                             }
                                         ),
                                         fontSize = 20.sp,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier
                                             .padding(10.dp)
                                     )
@@ -139,7 +148,10 @@ fun Replay (
                                         onCheckedChange = {
                                             selectedDay = it
                                             updateSelectedDay(selectedDay, day, viewModel)
-                                        }
+                                        },
+                                        colors = CheckboxDefaults.colors(
+                                            checkmarkColor = MaterialTheme.colorScheme.primary
+                                        )
                                     )
                                 }
                             }

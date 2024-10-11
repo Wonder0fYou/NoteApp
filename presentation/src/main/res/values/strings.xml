@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="joke">Анекдот</string>
-    <string name="message">Появился, значит, в зоне, Черный Сталкер</string>
+    <!-- Note -->
+    <string name="note" translation_description = "">Note</string>
+    <string name="notes" translation_description = "">Notes</string>
+    <string name="add_note" translation_description = "">Add Note</string>
+    <string name="title" translation_description = "">Title</string>
+    <string name="content" translation_description = "">Content</string>
+    <string name="content_of_the_note" translation_description = "">Contents of the note</string>
+    <string name="confirm_the_action" translation_description = "">Confirm the action</string>
+    <string name="want_to_delete_note" translation_description = "">Do you really want to delete the selected note?</string>
     <!-- AlarmClock -->
     <string name="description" translation_description = "">Description</string>
     <string name="text_description" tranlation_description ="">Add a description</string>
@@ -33,4 +40,5 @@
     <string name="sun" tranlation_description ="">Sun</string>
     <string name="alarms" tranlation_description ="">Alarms</string>
     <string name="alarm" tranlation_description ="">Alarm</string>
+    <!-- To do -->
 </resources>

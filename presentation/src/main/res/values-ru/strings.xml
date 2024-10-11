@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="joke">Анекдот</string>
-    <string name="message">Появился, значит, в зоне, Черный Сталкер</string>
+    <!-- Note -->
+    <string name="note">Заметка</string>
+    <string name="notes">Заметки</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="title">Заголовок</string>
+    <string name="content">Содержание</string>
+    <string name="content_of_the_note">Содержимое заметки</string>
+    <string name="confirm_the_action">Подтвердите действие</string>
+    <string name="want_to_delete_note">Вы действительно хотите удалить выбранную заметку?</string>
     <!-- AlarmClock -->
     <string name="text_description">Добавить описание</string>
     <string name="ok">ОК</string>
@@ -33,4 +40,5 @@
     <string name="sun">Вс</string>
     <string name="alarms">Будильники</string>
     <string name="alarm">Будильник</string>
+    <!-- To do -->
 </resources>

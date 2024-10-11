@@ -18,12 +18,13 @@ fun HomeScreen (
     onAddNoteClick: () -> Unit = {},
     drawerState: DrawerState
 ) {
-    val notesState by viewModel.notes.collectAsState()
+    val notesList by viewModel.notes.collectAsState()
 
     Scaffold (
         topBar = {
             HomeTopBar(
-                drawerState = drawerState
+                drawerState = drawerState,
+                notesList = notesList
             )
         },
         floatingActionButton = {
@@ -32,7 +33,7 @@ fun HomeScreen (
             )
         },
         content = { paddingValues ->
-            HomeContent(padding = paddingValues, notes = notesState, onNoteClick = onNoteClick)
+            HomeContent(padding = paddingValues, notes = notesList, onNoteClick = onNoteClick)
         }
     )
 }

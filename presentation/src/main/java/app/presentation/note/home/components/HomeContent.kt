@@ -10,10 +10,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,7 +42,7 @@ fun HomeContent (
                         .fillMaxWidth(),
                     shape = RectangleShape,
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.White
+                        containerColor = MaterialTheme.colorScheme.surface
                     )
                 ) {
                     note.title?.let {
@@ -51,6 +51,7 @@ fun HomeContent (
                             modifier = Modifier
                                 .padding(vertical = 2.dp, horizontal = 10.dp),
                             fontSize = 22.sp,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
                     note.content?.let {
@@ -58,12 +59,13 @@ fun HomeContent (
                             text = it,
                             modifier = Modifier
                                 .padding(vertical = 2.dp, horizontal = 10.dp),
-                            maxLines = 1
+                            maxLines = 1,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
                 HorizontalDivider(
-                    color = Color.LightGray,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
                     thickness = 1.dp
                 )
             }
