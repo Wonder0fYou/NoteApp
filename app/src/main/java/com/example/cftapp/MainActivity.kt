@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.cftapp.presentation.NoteApp
-import com.example.cftapp.presentation.viewmodels.NoteViewModel
-import com.example.cftapp.ui.theme.CFTappTheme
+import app.presentation.NoteApp
+import app.presentation.note.NoteViewModel
+import app.presentation.theme.CFTappTheme
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {

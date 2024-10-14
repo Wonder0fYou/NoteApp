@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="note" translatable="true">Note</string>
+    <string name="notes" translatable="true">Notes</string>
+    <string name="add_note" translatable="true">Add Note</string>
+    <string name="title" translatable="true">Title</string>
+    <string name="content" translatable="true">Content</string>
+    <string name="content_of_the_note" translatable="true">Contents of the note</string>
+    <string name="confirm_the_action" translatable="true">Confirm the action</string>
+    <string name="want_to_delete_note" translatable="true">Do you really want to delete the selected note?</string>
+    <string name="ok" translatable="true">ОК</string>
+    <string name="cancel" translatable="true">Cancel</string>
+    <string name="empty_here" translatable="true">It\'s empty here, add a note</string>
+    <string name="note_cant_empty" translatable="true">Note cannot be empty</string>
+</resources>

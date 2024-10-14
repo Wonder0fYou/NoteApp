@@ -2,11 +2,11 @@ package com.example.cftapp.di
 
 import android.app.Application
 import android.content.Context
+import app.data.di.DatabaseModule
+import app.data.di.RepositoryModule
+import app.presentation.di.UiModule
 import com.example.cftapp.CFTApplication
 import com.example.cftapp.MainActivity
-import com.example.cftapp.data.di.DatabaseModule
-import com.example.cftapp.data.di.RepositoryModule
-import com.example.cftapp.presentation.di.UiModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
