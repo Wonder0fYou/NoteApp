@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="note">Заметка</string>
+    <string name="notes">Заметки</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="title">Заголовок</string>
+    <string name="content">Содержание</string>
+    <string name="content_of_the_note">Содержимое заметки</string>
+    <string name="confirm_the_action">Подтвердите действие</string>
+    <string name="want_to_delete_note">Вы действительно хотите удалить выбранную заметку?</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+    <string name="empty_here">Тут пусто, добавьте заметку</string>
+    <string name="note_cant_empty">Заметка не может быть пустой</string>
+</resources>
