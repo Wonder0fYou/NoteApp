@@ -1,30 +1,28 @@
-package app.presentation.note.addNote
+package app.presentation.note.noteContent
 
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import app.presentation.note.addNote.components.AddContent
-import app.presentation.note.addNote.components.AddTopBar
+import app.presentation.note.noteContent.components.NoteContentTopBar
+import app.presentation.note.noteContent.components.NotePageContent
 import app.presentation.note.model.NoteAction
 import app.presentation.note.model.NoteState
 
 @Composable
-fun AddNoteScreen (
+fun NoteContentScreen(
+    notesState: NoteState,
     onAction: (NoteAction) -> Unit,
-    onSaveClick: () -> Unit,
-    onBackClick: () -> Unit,
-    notesState: NoteState
+    onBackClick: () -> Unit
 ) {
     Scaffold (
         topBar = {
-            AddTopBar(
+            NoteContentTopBar(
+                notesState = notesState,
                 onAction = onAction,
-                onSaveClick = {onSaveClick()},
-                onBackClick = {onBackClick()},
-                notesState = notesState
+                onBackClick = { onBackClick() }
             )
         },
         content = { paddingValues ->
-            AddContent(
+            NotePageContent(
                 paddingValues = paddingValues,
                 onAction = onAction,
                 notesState = notesState

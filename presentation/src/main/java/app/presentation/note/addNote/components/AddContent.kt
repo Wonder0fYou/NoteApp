@@ -15,14 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import app.presentation.R
+import app.presentation.note.model.NoteAction
+import app.presentation.note.model.NoteState
 
 @Composable
 fun AddContent (
     paddingValues: PaddingValues,
-    title: String,
-    content: String,
-    onTitleChange: (String) -> Unit,
-    onContentChange: (String) -> Unit,
+    onAction: (NoteAction) -> Unit,
+    notesState: NoteState
 ) {
     Column (
         modifier = Modifier
@@ -33,8 +33,9 @@ fun AddContent (
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = title,
-            onValueChange = onTitleChange,
+            value = notesState.inputTitle,
+            onValueChange = {
+                onAction(NoteAction.InputTitle(it, true)) },
             label = {
                 Text(
                     text = stringResource(id = R.string.title),
@@ -56,7 +57,10 @@ fun AddContent (
         TextField(
             modifier = Modifier
                 .fillMaxSize(),
-            value = content,
+            value = notesState.inputContent,
+            onValueChange = {
+                onAction(NoteAction.InputContent(it, true))
+            },
             colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -67,7 +71,6 @@ fun AddContent (
                 focusedLabelColor = MaterialTheme.colorScheme.primary,
                 unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
             ),
-            onValueChange = onContentChange,
             label = {
                 Text(
                     text = stringResource(id = R.string.content),

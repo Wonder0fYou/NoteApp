@@ -1,32 +1,38 @@
 package app.presentation.note.noteContent.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import app.presentation.note.model.NoteAction
+import app.presentation.note.model.NoteState
 
 @Composable
 fun NotePageContent (
-    title: String,
-    content: String,
-    modifier: Modifier = Modifier,
-    onTitleChange: (String) -> Unit,
-    onContentChange: (String) -> Unit
+    paddingValues: PaddingValues,
+    onAction: (NoteAction) -> Unit,
+    notesState: NoteState
 ) {
     Column (
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
+            .padding(paddingValues)
     ){
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = title,
-            onValueChange = onTitleChange,
+            value = notesState.selectedNote.title,
+            onValueChange = {
+                val newSelectedNote = notesState.selectedNote.copy(title = it)
+                onAction(NoteAction.ChangeNote(selectedNote = newSelectedNote, visible = true))
+            },
             textStyle = MaterialTheme.typography.bodyLarge,
             colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -42,8 +48,11 @@ fun NotePageContent (
         TextField(
             modifier = Modifier
                 .fillMaxSize(),
-            value = content,
-            onValueChange = onContentChange,
+            value = notesState.selectedNote.content,
+            onValueChange = {
+                val newSelectedNote = notesState.selectedNote.copy(content = it)
+                onAction(NoteAction.ChangeNote(selectedNote = newSelectedNote, visible = true))
+            },
             textStyle = MaterialTheme.typography.bodyLarge,
             colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,

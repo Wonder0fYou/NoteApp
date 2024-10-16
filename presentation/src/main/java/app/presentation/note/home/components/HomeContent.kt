@@ -19,13 +19,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.domain.entity.NoteItem
 import app.presentation.R
+import app.presentation.note.model.NoteState
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Composable
 fun HomeContent(
     padding: PaddingValues,
-    notes: List<NoteItem>,
+    notesState: NoteState,
     onNoteClick: (NoteItem) -> Unit,
 ) {
     Column (
@@ -33,7 +34,7 @@ fun HomeContent(
             .fillMaxSize()
             .padding(padding),
     ){
-        if (notes.isEmpty()) {
+        if (notesState.listItems.isEmpty()) {
             Text(
                 text = stringResource(id = R.string.empty_here),
                 style = MaterialTheme.typography.displayLarge.copy(
@@ -45,8 +46,7 @@ fun HomeContent(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            val sortedNotes = notes.sortedByDescending { it.lastEdit }
-            items(sortedNotes) { note ->
+            items(notesState.listItems) { note ->
                 Card(
                     onClick = { onNoteClick(note)},
                     modifier = Modifier

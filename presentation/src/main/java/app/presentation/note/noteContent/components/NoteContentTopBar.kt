@@ -15,28 +15,20 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.presentation.R
-import app.presentation.note.NoteViewModel
+import app.presentation.note.model.NoteAction
+import app.presentation.note.model.NoteState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteContentTopBar (
-    note: app.domain.entity.NoteItem,
-    viewModel: NoteViewModel,
-    title: String,
-    content: String,
-    onBackClick: () -> Unit,
-    noteId: Int,
-    isVisible: Boolean
+    notesState: NoteState,
+    onAction: (NoteAction) -> Unit,
+    onBackClick: () -> Unit
 ) {
-    val openDialogDelete = remember {
-        mutableStateOf(false)
-    }
     TopAppBar(
         title = { Text(
             text = stringResource(id = R.string.content_of_the_note),
@@ -46,13 +38,8 @@ fun NoteContentTopBar (
         ) },
         navigationIcon = {
             IconButton(onClick = {
-                backUpdate(
-                    note = note,
-                    viewModel = viewModel,
-                    title = title,
-                    content = content,
-                    onBackClick = {onBackClick()}
-                )
+                onAction(NoteAction.SaveNote)
+                onBackClick()
             }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -63,7 +50,7 @@ fun NoteContentTopBar (
         },
         actions = {
             IconButton(onClick = {
-                openDialogDelete.value = true
+                onAction(NoteAction.OpenDialogDelete(true))
             }) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
@@ -71,9 +58,9 @@ fun NoteContentTopBar (
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
-            if (openDialogDelete.value) {
+            if (notesState.openDialogDelete) {
                 AlertDialog(
-                    onDismissRequest = { openDialogDelete.value = false },
+                    onDismissRequest = { onAction(NoteAction.OpenDialogDelete(false)) },
                     title = {
                         Text(
                             text = stringResource(id = R.string.confirm_the_action),
@@ -88,7 +75,7 @@ fun NoteContentTopBar (
                     },
                     dismissButton = {
                         Button(
-                            onClick = {openDialogDelete.value = false},
+                            onClick = {onAction(NoteAction.OpenDialogDelete(false))},
                             modifier = Modifier.offset(x = (-100).dp)
                         ) {
                             Text(text = stringResource(id = R.string.cancel))
@@ -96,28 +83,18 @@ fun NoteContentTopBar (
                     },
                     confirmButton = {
                         Button(onClick = {
-                            noteDelete(
-                                noteId = noteId,
-                                onBackClick = {onBackClick()},
-                                viewModel = viewModel,
-                                openDialog = openDialogDelete.value
-                            )
-                            openDialogDelete.value = false
+                            onAction(NoteAction.DeleteNote)
+                            onBackClick()
                         }) {
                             Text(text = stringResource(id = R.string.ok))
                         }
                     }
                 )
             }
-            if (isVisible) {
+            if (notesState.visible) {
                 IconButton(
                     onClick = {
-                        noteUpdate(
-                            note = note,
-                            viewModel = viewModel,
-                            title = title,
-                            content = content
-                        )
+                        onAction(NoteAction.SaveNote)
                     }
                 ) {
                     Icon(
@@ -133,40 +110,4 @@ fun NoteContentTopBar (
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         )
     )
-}
-
-fun noteDelete (
-    noteId: Int,
-    onBackClick: () -> Unit,
-    viewModel: NoteViewModel,
-    openDialog: Boolean? = null
-) {
-    if (openDialog!!) {
-        viewModel.deleteNote(noteId)
-        onBackClick()
-    }
-}
-
-fun noteUpdate (
-    note: app.domain.entity.NoteItem,
-    viewModel: NoteViewModel,
-    title: String,
-    content: String
-) {
-    note.title = title
-    note.content = content
-    viewModel.updateNote(note)
-}
-
-fun backUpdate(
-    note: app.domain.entity.NoteItem,
-    viewModel: NoteViewModel,
-    title: String,
-    content: String,
-    onBackClick: () -> Unit
-) {
-    note.title = title
-    note.content = content
-    viewModel.updateNote(note)
-    onBackClick()
 }

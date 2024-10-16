@@ -13,18 +13,16 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import app.presentation.R
-import app.presentation.note.NoteViewModel
-import java.util.Date
+import app.presentation.note.model.NoteAction
+import app.presentation.note.model.NoteState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTopBar(
-    viewModel: NoteViewModel,
+    onAction: (NoteAction) -> Unit,
     onSaveClick: () -> Unit,
     onBackClick: () -> Unit,
-    title: String,
-    content: String,
-    checkEmpty: Boolean
+    notesState: NoteState
 ) {
     TopAppBar(
         title = { Text(
@@ -44,13 +42,11 @@ fun AddTopBar(
             }
         },
         actions = {
-            if (checkEmpty) {
-                IconButton(onClick = { addNote(
-                    title = title,
-                    content = content,
-                    onSaveClick = { onSaveClick() },
-                    viewModel = viewModel,
-                ) }) {
+            if (notesState.checkEmpty) {
+                IconButton(onClick = {
+                    onAction(NoteAction.SaveNote)
+                    onSaveClick()
+                }) {
                     Icon(
                         imageVector = Icons.Filled.Check,
                         contentDescription = "AddNote",
@@ -64,21 +60,4 @@ fun AddTopBar(
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         )
     )
-}
-
-fun addNote(
-    title: String,
-    content: String,
-    onSaveClick: () -> Unit,
-    viewModel: NoteViewModel
-) {
-    val date = Date()
-    viewModel.addNote(
-        app.domain.entity.NoteItem(
-            title = title,
-            content = content,
-            lastEdit = date
-        )
-    )
-    onSaveClick()
 }

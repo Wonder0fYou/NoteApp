@@ -18,7 +18,13 @@ class NoteRepositoryImpl @Inject constructor(
 
     override suspend fun getNote(noteId: Int) = appMapper.mapToNoteDomain(noteDao.getNoteById(noteId))
 
-    override suspend fun deleteNote(noteId: Int) = noteDao.deleteNote(noteId)
+    override suspend fun deleteNote(noteId: Int) {
+        try {
+            noteDao.deleteNote(noteId)
+        } catch (_: Exception) {
+            getNotes()
+        }
+    }
 
     override suspend fun insertNote(note: NoteItem) {
         val noteEntity = appMapper.mapToNoteEntity(note)
