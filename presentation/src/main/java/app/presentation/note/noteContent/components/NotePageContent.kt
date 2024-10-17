@@ -20,6 +20,7 @@ fun NotePageContent (
     onAction: (NoteAction) -> Unit,
     notesState: NoteState
 ) {
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -28,10 +29,9 @@ fun NotePageContent (
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = notesState.selectedNote.title,
+            value = notesState.noteTitle,
             onValueChange = {
-                val newSelectedNote = notesState.selectedNote.copy(title = it)
-                onAction(NoteAction.ChangeNote(selectedNote = newSelectedNote, visible = true))
+                onAction(NoteAction.ChangeTitle(noteTitle = it, visible = true))
             },
             textStyle = MaterialTheme.typography.bodyLarge,
             colors = TextFieldDefaults.colors(
@@ -48,10 +48,9 @@ fun NotePageContent (
         TextField(
             modifier = Modifier
                 .fillMaxSize(),
-            value = notesState.selectedNote.content,
+            value = notesState.noteContent,
             onValueChange = {
-                val newSelectedNote = notesState.selectedNote.copy(content = it)
-                onAction(NoteAction.ChangeNote(selectedNote = newSelectedNote, visible = true))
+                onAction(NoteAction.ChangeContent(noteContent = it, visible = true))
             },
             textStyle = MaterialTheme.typography.bodyLarge,
             colors = TextFieldDefaults.colors(

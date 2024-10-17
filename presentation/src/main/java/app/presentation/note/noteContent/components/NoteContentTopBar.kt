@@ -27,7 +27,8 @@ import app.presentation.note.model.NoteState
 fun NoteContentTopBar (
     notesState: NoteState,
     onAction: (NoteAction) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onDeleteClick: () -> Unit
 ) {
     TopAppBar(
         title = { Text(
@@ -38,7 +39,7 @@ fun NoteContentTopBar (
         ) },
         navigationIcon = {
             IconButton(onClick = {
-                onAction(NoteAction.SaveNote)
+                onAction(NoteAction.UpdateNote)
                 onBackClick()
             }) {
                 Icon(
@@ -84,7 +85,7 @@ fun NoteContentTopBar (
                     confirmButton = {
                         Button(onClick = {
                             onAction(NoteAction.DeleteNote)
-                            onBackClick()
+                            onDeleteClick()
                         }) {
                             Text(text = stringResource(id = R.string.ok))
                         }
@@ -94,7 +95,7 @@ fun NoteContentTopBar (
             if (notesState.visible) {
                 IconButton(
                     onClick = {
-                        onAction(NoteAction.SaveNote)
+                        onAction(NoteAction.UpdateNote)
                     }
                 ) {
                     Icon(

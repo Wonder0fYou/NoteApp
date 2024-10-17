@@ -10,7 +10,6 @@ import app.presentation.note.addNote.AddNoteScreen
 import app.presentation.note.home.HomeScreen
 import app.presentation.note.NoteViewModel
 import app.presentation.note.noteContent.NoteContentScreen
-import app.presentation.utils.daggerViewModel
 
 @Composable
 fun NoteApp(
@@ -34,12 +33,13 @@ fun NoteApp(
                             noteId = it.noteId.toString()
                         )
                     )
+                    noteViewModel.getNote(it.noteId)
                 },
                 onAddNoteClick = {
                     navController.navigate(
                         Screen.AddNote.route
                     )
-                }
+                },
             )
         }
 
@@ -47,14 +47,15 @@ fun NoteApp(
         composable(
             route = Screen.NoteContent.route,
             arguments = Screen.NoteContent.navArgument
-        ) { backStackEntry ->
-            val noteId = backStackEntry.arguments?.getString("noteId")?.toIntOrNull() ?: -1
-            noteViewModel.getNote(noteId)
+        ) {
             NoteContentScreen (
                 onAction = noteViewModel::onAction,
                 notesState = notesState,
                 onBackClick = {
                     navController.navigateUp()
+                },
+                onDeleteClick = {
+                    navController.popBackStack()
                 }
             )
         }

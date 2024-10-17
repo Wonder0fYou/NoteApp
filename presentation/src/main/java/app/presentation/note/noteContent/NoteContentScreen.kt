@@ -11,14 +11,16 @@ import app.presentation.note.model.NoteState
 fun NoteContentScreen(
     notesState: NoteState,
     onAction: (NoteAction) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onDeleteClick: () -> Unit
 ) {
     Scaffold (
         topBar = {
             NoteContentTopBar(
                 notesState = notesState,
                 onAction = onAction,
-                onBackClick = { onBackClick() }
+                onBackClick = { onBackClick() },
+                onDeleteClick = {onDeleteClick()}
             )
         },
         content = { paddingValues ->

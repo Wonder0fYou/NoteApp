@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -41,10 +42,14 @@ fun HomeTopBar(
                 TextField(
                     value = notesState.searchWord,
                     onValueChange = {onAction(NoteAction.InputSearchWord(it))},
-                    label = { Text(stringResource(id = R.string.search)) },
+                    label = { if (notesState.searchWord.isEmpty()) Text(stringResource(id = R.string.search)) },
                     singleLine = true,
+                    colors = TextFieldDefaults.colors(
+                        focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
                     modifier = Modifier
-                        .size(width = 270.dp, height = 40.dp)
+                        .size(width = 270.dp, height = 60.dp)
                         .padding(horizontal = 8.dp)
                         .clip(shape = RoundedCornerShape(16.dp))
                         .background(color = MaterialTheme.colorScheme.surface)

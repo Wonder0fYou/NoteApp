@@ -6,7 +6,7 @@ import app.domain.entity.NoteItem
 import app.domain.repository.NoteRepository
 import app.presentation.note.model.NoteAction
 import app.presentation.note.model.NoteState
-import app.presentation.utils.currentDate
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -28,11 +28,21 @@ class NoteViewModel @Inject constructor(
         viewModelScope.launch {
             noteRepository.getNotes().collect { notesList: List<NoteItem> ->
                 val searchWord = _noteState.value.searchWord
-                _noteState.update {
-                    _noteState.value.copy(
-                        listItems = notesList.sortedWith(compareByDescending<NoteItem> { it.lastEdit }
-                            .thenBy { if (searchWord.isEmpty()) it.title else it.title.contains(searchWord, ignoreCase = true)})
-                    )
+                if (searchWord.isNotEmpty()) {
+                    val filteredAndSortedList = notesList
+                        .filter { it.title.contains(searchWord, ignoreCase = true) }
+                        .sortedBy { it.title }
+                    _noteState.update {
+                        _noteState.value.copy(
+                            listItems = filteredAndSortedList
+                        )
+                    }
+                } else {
+                    _noteState.update {
+                        _noteState.value.copy(
+                            listItems = notesList.sortedWith(compareByDescending { it.lastEdit })
+                        )
+                    }
                 }
             }
         }
@@ -66,36 +76,39 @@ class NoteViewModel @Inject constructor(
                     )
                 }
             }
-            is NoteAction.ChangeNote -> _noteState.update {
-                if (action.selectedNote == noteState.value.selectedNote) {
+            is NoteAction.ChangeTitle -> _noteState.update {
+                if (action.noteTitle == noteState.value.noteTitle) {
                     noteState.value.copy(
-                        selectedNote = action.selectedNote,
+                        noteTitle = action.noteTitle,
                         visible = false
                     )
                 } else {
                     noteState.value.copy(
-                        selectedNote = action.selectedNote,
+                        noteTitle = action.noteTitle,
                         visible = true
                     )
                 }
             }
             is NoteAction.ChangeContent -> _noteState.update {
-                if (action.content == noteState.value.selectedNote.content) {
+                if (action.noteContent == noteState.value.noteContent) {
                     noteState.value.copy(
-                        content = action.content,
+                        noteContent = action.noteContent,
                         visible = false
                     )
                 } else {
                     noteState.value.copy(
-                        content = action.content,
+                        noteContent = action.noteContent,
                         visible = true
                     )
                 }
             }
-            is NoteAction.InputSearchWord -> _noteState.update {
-                noteState.value.copy(
-                    searchWord = action.searchWord
-                )
+            is NoteAction.InputSearchWord -> {
+                _noteState.update {
+                    noteState.value.copy(
+                        searchWord = action.searchWord
+                    )
+                }
+                loadNote()
             }
             is NoteAction.OpenDialogDelete -> _noteState.update {
                 noteState.value.copy(
@@ -103,25 +116,24 @@ class NoteViewModel @Inject constructor(
                 )
             }
 
-            NoteAction.SaveNote -> {
-                if (noteState.value.isAddItem) {
-                    addNote()
-                    _noteState.update {
-                        noteState.value.copy(inputTitle = "", inputContent = "", checkEmpty = false)
-                    }
-                } else {
-                    updateNote()
-                    _noteState.update {
-                        noteState.value.copy(
-                            visible = false,
-                            isAddItem = true
-                        )
-                    }
+            NoteAction.AddNote -> {
+                addNote()
+                _noteState.update {
+                    noteState.value.copy(inputTitle = "", inputContent = "", checkEmpty = false)
+                }
+            }
+            NoteAction.UpdateNote -> {
+                updateNote()
+                _noteState.update {
+                    noteState.value.copy(
+                        visible = false
+                    )
                 }
             }
             NoteAction.DeleteNote -> {
                 try {
-                    deleteNote(noteState.value.selectedNote.noteId)
+                    val noteId = noteState.value.noteId
+                    deleteNote(noteId)
                     _noteState.update {
                         noteState.value.copy(openDialogDelete = false)
                     }
@@ -138,8 +150,9 @@ class NoteViewModel @Inject constructor(
             val note = noteRepository.getNote(noteId)
             _noteState.update {
                 noteState.value.copy(
-                    selectedNote = note,
-                    isAddItem = false
+                    noteId = note.noteId,
+                    noteTitle = note.title,
+                    noteContent = note.content,
                 )
             }
         }
@@ -158,8 +171,9 @@ class NoteViewModel @Inject constructor(
 
     private fun updateNote() {
         val note = NoteItem(
-            title = noteState.value.selectedNote.title.trim(),
-            content = noteState.value.selectedNote.content.trim(),
+            noteId = noteState.value.noteId,
+            title = noteState.value.noteTitle.trim(),
+            content = noteState.value.noteContent.trim(),
             lastEdit = noteState.value.lastEdit
         )
         viewModelScope.launch {
@@ -168,7 +182,7 @@ class NoteViewModel @Inject constructor(
     }
 
     private fun deleteNote(noteId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             noteRepository.deleteNote(noteId)
         }
     }

@@ -44,7 +44,7 @@ fun AddTopBar(
         actions = {
             if (notesState.checkEmpty) {
                 IconButton(onClick = {
-                    onAction(NoteAction.SaveNote)
+                    onAction(NoteAction.AddNote)
                     onSaveClick()
                 }) {
                     Icon(

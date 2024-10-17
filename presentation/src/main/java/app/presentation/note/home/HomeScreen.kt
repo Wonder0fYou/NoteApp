@@ -32,7 +32,7 @@ fun HomeScreen (
             HomeContent(
                 padding = paddingValues,
                 notesState = notesState,
-                onNoteClick = onNoteClick
+                onNoteClick = onNoteClick,
             )
         }
     )

@@ -48,7 +48,8 @@ fun HomeContent(
         ) {
             items(notesState.listItems) { note ->
                 Card(
-                    onClick = { onNoteClick(note)},
+                    onClick = {
+                        onNoteClick(note) },
                     modifier = Modifier
                         .fillMaxWidth(),
                     shape = RectangleShape,
