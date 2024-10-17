@@ -13,4 +13,5 @@
     <string name="empty_here">Тут пусто, добавьте заметку</string>
     <string name="note_cant_empty">Заметка не может быть пустой</string>
     <string name="search">Поиск</string>
+    <string name="no_such_note_was_found">Такой заметки не найдено</string>
 </resources>

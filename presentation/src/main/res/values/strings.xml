@@ -13,4 +13,5 @@
     <string name="empty_here" translatable="true">It\'s empty here, add a note</string>
     <string name="note_cant_empty" translatable="true">Note cannot be empty</string>
     <string name="search" translatable="true">Search</string>
+    <string name="no_such_note_was_found" translatable="true">No such note was found</string>
 </resources>

@@ -20,8 +20,7 @@ import androidx.compose.ui.unit.dp
 import app.domain.entity.NoteItem
 import app.presentation.R
 import app.presentation.note.model.NoteState
-import java.text.SimpleDateFormat
-import java.util.Locale
+import app.presentation.utils.formatToTimeString
 
 @Composable
 fun HomeContent(
@@ -35,12 +34,21 @@ fun HomeContent(
             .padding(padding),
     ){
         if (notesState.listItems.isEmpty()) {
-            Text(
-                text = stringResource(id = R.string.empty_here),
-                style = MaterialTheme.typography.displayLarge.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+            if (notesState.searchWord.isNotEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.no_such_note_was_found),
+                    style = MaterialTheme.typography.displayLarge.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 )
-            )
+            } else {
+                Text(
+                    text = stringResource(id = R.string.empty_here),
+                    style = MaterialTheme.typography.displayLarge.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                )
+            }
         }
         LazyColumn (
             modifier = Modifier
@@ -78,18 +86,14 @@ fun HomeContent(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         )
-                        note.lastEdit.let {
-                            val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-                            val formattedDate = dateFormat.format(it)
-                            Text(
-                                text = formattedDate,
-                                modifier = Modifier
-                                    .padding(vertical = 2.dp, horizontal = 10.dp),
-                                style = MaterialTheme.typography.bodyMedium.copy(
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                        Text(
+                            text = note.lastEdit.formatToTimeString(),
+                            modifier = Modifier
+                                .padding(vertical = 2.dp, horizontal = 10.dp),
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                        }
+                        )
                     }
                 }
                 HorizontalDivider(

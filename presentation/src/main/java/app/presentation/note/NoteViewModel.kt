@@ -51,56 +51,28 @@ class NoteViewModel @Inject constructor(
     fun onAction(action: NoteAction) {
         when(action) {
             is NoteAction.InputTitle -> _noteState.update {
-                if (action.inputTitle.isBlank()) {
-                    noteState.value.copy(
-                        inputTitle = action.inputTitle,
-                        checkEmpty = false
-                    )
-                } else {
-                    noteState.value.copy(
-                        inputTitle = action.inputTitle,
-                        checkEmpty = true
-                    )
-                }
+                noteState.value.copy(
+                    inputTitle = action.inputTitle,
+                    checkEmpty = action.inputTitle.isBlank()
+                )
             }
             is NoteAction.InputContent -> _noteState.update {
-                if (action.inputContent.isBlank()) {
-                    noteState.value.copy(
-                        inputContent = action.inputContent,
-                        checkEmpty = false
-                    )
-                } else {
-                    noteState.value.copy(
-                        inputContent = action.inputContent,
-                        checkEmpty = true
-                    )
-                }
+                noteState.value.copy(
+                    inputContent = action.inputContent,
+                    checkEmpty = action.inputContent.isBlank()
+                )
             }
             is NoteAction.ChangeTitle -> _noteState.update {
-                if (action.noteTitle == noteState.value.noteTitle) {
-                    noteState.value.copy(
-                        noteTitle = action.noteTitle,
-                        visible = false
-                    )
-                } else {
-                    noteState.value.copy(
-                        noteTitle = action.noteTitle,
-                        visible = true
-                    )
-                }
+                noteState.value.copy(
+                    noteTitle = action.noteTitle,
+                    visible = action.noteTitle.isBlank()
+                )
             }
             is NoteAction.ChangeContent -> _noteState.update {
-                if (action.noteContent == noteState.value.noteContent) {
-                    noteState.value.copy(
-                        noteContent = action.noteContent,
-                        visible = false
-                    )
-                } else {
-                    noteState.value.copy(
-                        noteContent = action.noteContent,
-                        visible = true
-                    )
-                }
+                noteState.value.copy(
+                    noteContent = action.noteContent,
+                    visible = action.noteContent.isBlank()
+                )
             }
             is NoteAction.InputSearchWord -> {
                 _noteState.update {
@@ -131,15 +103,10 @@ class NoteViewModel @Inject constructor(
                 }
             }
             NoteAction.DeleteNote -> {
-                try {
-                    val noteId = noteState.value.noteId
-                    deleteNote(noteId)
-                    _noteState.update {
-                        noteState.value.copy(openDialogDelete = false)
-                    }
-                    loadNote()
-                } catch (_: Exception) {
-                    loadNote()
+                val noteId = noteState.value.noteId
+                deleteNote(noteId)
+                _noteState.update {
+                    noteState.value.copy(openDialogDelete = false)
                 }
             }
         }
