@@ -1,3 +1,4 @@
+# Android Note App
 Android Note App: Clean Architecture, MVVM, Room Database, Dagger, Jetpack Compose and composable navigation.
 
 I developed a Android Note app that allows users to create, edit, and delete notes easily. I used several advanced technologies to ensure that the app is easy to use and that user notes are stored securely.
@@ -6,13 +7,16 @@ I developed a Android Note app that allows users to create, edit, and delete not
 3. I used Dagger to inject dependencies into the app in secure way.
 4. Finally, I used composable navigation
 
-   
-   Installation
+
+## Installation
    
 To install and run the app, follow these steps:
 
-1. Clone the repository:
-git clone https://github.com/Wonder0fYou/CFTapp.git
+1.Clone the repository:
+   ```bash
+   git clone https://github.com/Wonder0fYou/CFTapp.git
+```
+
 2. Open the project in Android Studio.
 3. Build and run the app on an Android device or emulator.
 
