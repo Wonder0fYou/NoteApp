@@ -1,32 +1,25 @@
 # Android Note App
-Android Note App: Clean Architecture, MVVM, Room Database, Dagger, Jetpack Compose and composable navigation.
 
 I developed a Android Note app that allows users to create, edit, and delete notes easily. I used several advanced technologies to ensure that the app is easy to use and that user notes are stored securely.
-1. I used the MVVM architecture to organize the app's code. This means that the business logic is separated from the user interface, making maintenance and testing easier. The ViewModel is the intermediate layer that communicates with the database and other data sources, while the View is the user interface that is updated based on changes in the ViewModel.
-2. I used the Room Database to store user notes. Room is a Jetpack library that allows for efficient and easy creation and management of SQLite databases. With Room, I was able to define the database entities and tables in an object modeling language (ORM) instead of manually writing SQL code.
-3. I used Dagger to inject dependencies into the app in secure way.
-4. Finally, I used composable navigation
 
+## Libraries used
 
-## Installation
-   
-To install and run the app, follow these steps:
+### MVVM
+I used the MVVM architecture to organize the app's code. This means that the business logic is separated from the user interface, making maintenance and testing easier. The ViewModel is the intermediate layer that communicates with the database and other data sources, while the View is the user interface that is updated based on changes in the ViewModel.
+### Room
+I used the Room Database to store user notes. Room is a Jetpack library that allows for efficient and easy creation and management of SQLite databases. With Room, I was able to define the database entities and tables in an object modeling language (ORM) instead of manually writing SQL code.
+### Dagger
+I used Dagger to inject dependencies into the app in secure way.
+### Composable navigation
+Finally, I used composable navigation
 
-1.Clone the repository:
-   ```bash
-   git clone https://github.com/Wonder0fYou/CFTapp.git
-```
+## Screenshots
 
-2. Open the project in Android Studio.
-3. Build and run the app on an Android device or emulator.
-
-Screenshots
-
-<img src="https://github.com/user-attachments/assets/19aac733-8436-453d-9d49-347265da1a7e" alt="Screenshot" width="200" />
-<img src="https://github.com/user-attachments/assets/94370623-ffcd-4dfe-8f53-c76409d5b9a3" alt="Screenshot 1" width="200" />
-<img src="https://github.com/user-attachments/assets/a6bb52e0-4853-4316-8f66-5283ab2db2a0" alt="Screenshot 2" width="200" />
-<img src="https://github.com/user-attachments/assets/ddc0c436-237e-4695-84f8-d51b96e39e1a" alt="Screenshot 3" width="200" />
-<img src="https://github.com/user-attachments/assets/e6c915b7-9862-4ac0-aa64-a421f9102cf9" alt="Screenshot 4" width="200" />
-<img src="https://github.com/user-attachments/assets/63b30222-4d3d-45be-910c-a634021eb11c" alt="Screenshot 5" width="200" />
-<img src="https://github.com/user-attachments/assets/103b3438-75c9-43d5-8015-50f49ebc9601" alt="Screenshot 6" width="200" />
-<img src="https://github.com/user-attachments/assets/f90d8e9c-7086-4f25-9477-cc16eb923503" alt="Screenshot 7" width="200" />
+<img src="https://github.com/user-attachments/assets/19aac733-8436-453d-9d49-347265da1a7e" alt="Screenshot 1" width="200" />
+<img src="https://github.com/user-attachments/assets/94370623-ffcd-4dfe-8f53-c76409d5b9a3" alt="Screenshot 2" width="200" />
+<img src="https://github.com/user-attachments/assets/a6bb52e0-4853-4316-8f66-5283ab2db2a0" alt="Screenshot 3" width="200" />
+<img src="https://github.com/user-attachments/assets/ddc0c436-237e-4695-84f8-d51b96e39e1a" alt="Screenshot 4" width="200" />
+<img src="https://github.com/user-attachments/assets/e6c915b7-9862-4ac0-aa64-a421f9102cf9" alt="Screenshot 5" width="200" />
+<img src="https://github.com/user-attachments/assets/63b30222-4d3d-45be-910c-a634021eb11c" alt="Screenshot 6" width="200" />
+<img src="https://github.com/user-attachments/assets/103b3438-75c9-43d5-8015-50f49ebc9601" alt="Screenshot 7" width="200" />
+<img src="https://github.com/user-attachments/assets/f90d8e9c-7086-4f25-9477-cc16eb923503" alt="Screenshot 8" width="200" />
