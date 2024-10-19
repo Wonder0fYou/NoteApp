@@ -13,7 +13,7 @@ I used the Room Database to store user notes. Room is a Jetpack library that all
 ### Dagger
 I used Dagger to inject dependencies into the app in secure way.
 
-### Composable navigation
+### Composable Navigation
 Finally, I used composable navigation. Composable Navigation is a modern approach to navigate between different screens in Jetpack Compose applications.
 
 # Screenshots
