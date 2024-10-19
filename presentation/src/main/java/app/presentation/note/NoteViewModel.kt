@@ -51,28 +51,56 @@ class NoteViewModel @Inject constructor(
     fun onAction(action: NoteAction) {
         when(action) {
             is NoteAction.InputTitle -> _noteState.update {
-                noteState.value.copy(
-                    inputTitle = action.inputTitle,
-                    checkEmpty = action.inputTitle.isBlank()
-                )
+                if (action.inputTitle.isBlank()) {
+                    noteState.value.copy(
+                        inputTitle = action.inputTitle,
+                        checkEmpty = false
+                    )
+                } else {
+                    noteState.value.copy(
+                        inputTitle = action.inputTitle,
+                        checkEmpty = true
+                    )
+                }
             }
             is NoteAction.InputContent -> _noteState.update {
-                noteState.value.copy(
-                    inputContent = action.inputContent,
-                    checkEmpty = action.inputContent.isBlank()
-                )
+                if (action.inputContent.isBlank()) {
+                    noteState.value.copy(
+                        inputContent = action.inputContent,
+                        checkEmpty = false
+                    )
+                } else {
+                    noteState.value.copy(
+                        inputContent = action.inputContent,
+                        checkEmpty = true
+                    )
+                }
             }
             is NoteAction.ChangeTitle -> _noteState.update {
-                noteState.value.copy(
-                    noteTitle = action.noteTitle,
-                    visible = action.noteTitle.isBlank()
-                )
+                if (action.noteTitle == noteState.value.noteTitle) {
+                    noteState.value.copy(
+                        noteTitle = action.noteTitle,
+                        visible = false
+                    )
+                } else {
+                    noteState.value.copy(
+                        noteTitle = action.noteTitle,
+                        visible = true
+                    )
+                }
             }
             is NoteAction.ChangeContent -> _noteState.update {
-                noteState.value.copy(
-                    noteContent = action.noteContent,
-                    visible = action.noteContent.isBlank()
-                )
+                if (action.noteContent == noteState.value.noteContent) {
+                    noteState.value.copy(
+                        noteContent = action.noteContent,
+                        visible = false
+                    )
+                } else {
+                    noteState.value.copy(
+                        noteContent = action.noteContent,
+                        visible = true
+                    )
+                }
             }
             is NoteAction.InputSearchWord -> {
                 _noteState.update {
