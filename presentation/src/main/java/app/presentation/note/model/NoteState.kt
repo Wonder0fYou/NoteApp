@@ -6,8 +6,8 @@ import java.util.Date
 
 data class NoteState(
     val listItems: List<NoteItem> = emptyList(),
-    var inputTitle: String = "",
-    var inputContent: String = "",
+    val inputTitle: String = "",
+    val inputContent: String = "",
     var noteId: Int = 0,
     var noteTitle: String = "",
     var noteContent: String = "",

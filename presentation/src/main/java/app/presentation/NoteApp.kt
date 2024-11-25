@@ -1,8 +1,8 @@
 package app.presentation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,10 +16,8 @@ fun NoteApp(
     noteViewModel: NoteViewModel
 ) {
     val navController = rememberNavController()
-    val notesState by noteViewModel.noteState.collectAsState()
-//    val viewModel: NoteViewModel = daggerViewModel {
-//        Dagger2NoteComponent.factory().create().getViewModel()
-//    }
+    val notesState by noteViewModel.noteState.collectAsStateWithLifecycle()
+
     NavHost(navController = navController, startDestination = Screen.Home.route) {
 
         //HomeScreen

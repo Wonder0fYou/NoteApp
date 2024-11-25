@@ -33,13 +33,13 @@ class NoteViewModel @Inject constructor(
                         .filter { it.title.contains(searchWord, ignoreCase = true) }
                         .sortedBy { it.title }
                     _noteState.update {
-                        _noteState.value.copy(
+                        noteState.value.copy(
                             listItems = filteredAndSortedList
                         )
                     }
                 } else {
                     _noteState.update {
-                        _noteState.value.copy(
+                        noteState.value.copy(
                             listItems = notesList.sortedWith(compareByDescending { it.lastEdit })
                         )
                     }

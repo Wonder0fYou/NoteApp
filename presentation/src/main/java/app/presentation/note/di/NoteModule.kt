@@ -12,8 +12,12 @@ abstract class NoteModule {
     companion object {
         @Provides
         @UiScope
-        fun provideNoteViewModel(repository: NoteRepository): NoteViewModel {
-            return NoteViewModel(repository)
+        fun provideNoteViewModel(
+            repository: NoteRepository
+        ): NoteViewModel {
+            return NoteViewModel(
+                repository
+            )
         }
     }
 }
